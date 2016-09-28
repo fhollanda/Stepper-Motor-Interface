@@ -1,24 +1,25 @@
 import time
 import serial
+import commands
 
-def do_command(command, parameters = "", acknowledge = False):
+SERIAL_PORT = '/dev/ttyUSB0'
+SERIAL_BAUDRATE = 9600
+C4_ID = 1
+
+def serial_process(command, parameters = "", acknowledge = False):
 	serialResponse = []
-
-	c4Flag = "1"
 	acknowledgeFlag = "n" if(acknowledge) else ""
-
-	writable = "!" + c4Flag + command + parameters + acknowledgeFlag + "\r"
-	
+	writable = "!" + C4_ID + command + parameters + acknowledgeFlag + commands.CR
 	writable_bytes = writable.encode('ascii')	
 
 	try:
 		ser = serial.Serial(
-		                port='/dev/ttyUSB0',
-		                baudrate = 9600,
-		                parity=serial.PARITY_NONE,
-		                stopbits=serial.STOPBITS_ONE,
-		                bytesize=serial.EIGHTBITS,
-		                timeout=1
+					port= SERIAL_PORT, 
+					baudrate = SERIAL_BAUDRATE, 
+					parity=serial.PARITY_NONE,
+		            stopbits=serial.STOPBITS_ONE,
+		            bytesize=serial.EIGHTBITS,
+		            timeout=1
 		)
 
 		time.sleep(1)	
