@@ -4,5 +4,5 @@ import util.commands as commands
 
 class CheckCopyright(Resource):
     def get(self):
-    	serial_return = serial_process(commands.MOVE)
+    	serial_return = serial_process(commands.COPYRIGHT)
         return {'serial_status': serial_return[0], 'serial_response': serial_return[1]}
