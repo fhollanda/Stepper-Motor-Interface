@@ -1,5 +1,7 @@
 # Distribution / packaging
 .Python
+*.pyc
+*.db
 env/
 build/
 develop-eggs/
