@@ -36,17 +36,20 @@ def send_and_receive_data(command, pre_parameters = "", post_parameters = ""):
 		ser = SerialProcessor()
 		ser.write_serial(writable)
 		serial_line = ser.read_serial()
-		serial_response = [1, serial_line]
+		serial_response = [200, serial_line]
 
 		if(post_parameters):
 			ser.write_serial(post_parameters)
 			serial_another_line = ser.read_serial()
-			serial_response = [1, [serial_line, serial_another_line]]
+			serial_response = [200, [serial_line, serial_another_line]]
 
 		#ser.close_serial()
+	except serial.SerialException as se:
+		serial_response = make_error_response(503, writable, se)
+	except serial.SerialTimeoutException as ste:
+		serial_response = make_error_response(504, writable, ste)
 	except Exception as e:
-		print("error: " + str(e))
-		serial_response = [0, ["error: Couldn't write: " + writable, "cause: " + str(e)]]
+		serial_response = make_error_response(500, writable, e)
 
 	return serial_response
 
@@ -57,9 +60,13 @@ def abort_home_command():
 		ser = SerialProcessor()
 		ser.write_serial(commands.ABORT)
 		serial_line = ser.read_serial()
-		serial_response = [1, serial_line]
+		serial_response = [200, serial_line]
 	except Exception as e:
 		print("error: " + str(e))
-		serial_response = [0, ["error: Couldn't abort home operation", "cause: " + str(e)]]
+		serial_response = [500, ["error: Couldn't abort home operation", "cause: " + str(e)]]
 
 	return serial_response
+
+def make_error_response(status, data, exception):
+	print("error: " + str(exception))
+	return [status, ["error: Couldn't write: " + data, "cause: " + str(exception)]]

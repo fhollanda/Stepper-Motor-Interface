@@ -19,7 +19,7 @@ class MoveMotor(Resource):
 		steps = args['steps']
 
 		serial_return = do_movement(direction, motor_number, steps, acknowledge)
-		return {'serial_status': serial_return[0], 'serial_response': serial_return[1]}
+		return {'response': serial_return[1]}, serial_return[0]
 
 def do_movement(direction, motor_number, steps, acknowledge):
 	acknowledgeFlag = "n" if(acknowledge) else ""

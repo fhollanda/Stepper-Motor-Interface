@@ -5,7 +5,7 @@ import util.commands as commands
 class HomeMotor(Resource):
 	def post(self, id):
 		serial_return = send_and_receive_data(commands.HOME, str(id))
-		return {'serial_status': serial_return[0], 'serial_response': serial_return[1]} 
+		return {'response': serial_return[1]}, serial_return[0] 
 
 class HomeMotorList(Resource):
 	def __init__(self):
@@ -17,7 +17,7 @@ class HomeMotorList(Resource):
 		motor_list = args['motor_list']
 
 		serial_return = do_return_home_list(motor_list)
-		return {'serial_status': serial_return[0], 'serial_response': serial_return[1]} 
+		return {'response': serial_return[1]}, serial_return[0] 
 
 def do_return_home_list(motor_list):
 	if(motor_list):
@@ -26,9 +26,9 @@ def do_return_home_list(motor_list):
 			motors+=str(motor)
 		return send_and_receive_data(commands.HOME, motors)
 	else:
-		return [0, "No motor information has been given, command ignored"]
+		return [422, "No motor information has been given, command ignored"]
 
 class AbortHomeCommand(Resource):
 	def post(self):
 		serial_return = abort_home_command()
-		return {'serial_status': serial_return[0], 'serial_response': serial_return[1]}
+		return {'response': serial_return[1]}, serial_return[0] 

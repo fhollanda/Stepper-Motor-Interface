@@ -15,15 +15,13 @@ def only_json():
     if request.data and not request.is_json: 
         abort(400)
 
-# TODO: se o serial_status for 0, a resposta também não deve ser 200 e sim 500
-
 api = Api(app)
 api.add_resource(MoveMotor, '/motor/api/move')
 api.add_resource(CheckCopyright, '/motor/api/copyright')
 api.add_resource(AbortMotion, '/motor/api/abort')
 api.add_resource(HomeMotor, '/motor/api/home/go/<int:id>')
 api.add_resource(HomeMotorList, '/motor/api/home/go')
-api.add_resource(AbortHomeCommand, '/motor/api/home/abort')
+api.add_resource(AbortHomeCommand, '/motor/api/home/abort') 
 api.add_resource(FirmwareInformation, '/motor/api/firmware')
 
 if __name__ == '__main__':

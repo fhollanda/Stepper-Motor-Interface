@@ -10,11 +10,10 @@ class FirmwareInformation(Resource):
 		version = send_and_receive_data(commands.FIRMWARE_INFO_VERSION)
 
 		if(product_info[0] == 1 and description[0] == 1 and version[0] == 1):
-			return {'product_info': product_info[1], 'description': description[1], 'version': version[1]}
+			return {'product_info': product_info[1], 'description': description[1], 'version': version[1]}, 200
 		else:
 			responses = [product_info[1], description[1], version[1]]
-			return {'serial_status': 0, 'serial_response': ["error: Couldn't retrieve firmware information", 
-			responses ]}
+			return {'response': ["Couldn't retrieve firmware information", responses]}, 500
 
 class FirmwareInfoProduct(Resource):
     def get(self):
