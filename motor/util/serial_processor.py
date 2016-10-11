@@ -28,7 +28,7 @@ class SerialProcessor:
 	def read_serial(self):
 		return self.ser.readline()
 
-def send_and_receive_data(command, pre_parameters = "", post_parameters = ""):
+def send_c4_command(command, pre_parameters = "", post_parameters = ""):
 	writable = "!" + C4_ID + command + pre_parameters + commands.CR
 	serial_response = []
 	
@@ -53,17 +53,16 @@ def send_and_receive_data(command, pre_parameters = "", post_parameters = ""):
 
 	return serial_response
 
-def abort_home_command():
+def send_single_command(command):
 	serial_response = []
 
 	try:
 		ser = SerialProcessor()
-		ser.write_serial(commands.ABORT)
+		ser.write_serial(command)
 		serial_line = ser.read_serial()
 		serial_response = [200, serial_line]
 	except Exception as e:
-		print("error: " + str(e))
-		serial_response = [500, ["error: Couldn't abort home operation", "cause: " + str(e)]]
+		serial_response = make_error_response(500, command, e)
 
 	return serial_response
 

@@ -1,6 +1,12 @@
 # Carriage Return
 CR = "\r"
 
+# Request motor positon
+REQUEST_MOTOR_POSITION = "rp"
+
+# Request move state
+REQUEST_MOVE_STATE = "rs"
+
 # (c) - Copyright Notice
 COPYRIGHT = "(c)"
 
