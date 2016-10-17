@@ -17,8 +17,8 @@ class AbortMotion(Resource):
 
 def do_abort(get_steps_taken):
 	if(get_steps_taken):
-		send_c4_command(commands.ABORT)
-		motor_position_response = send_single_command(commands.REQUEST_MOTOR_POSITION)
+		send_c4_command(command, False)
+		motor_position_response = send_single_command(commands.REQUEST_MOTOR_POSITION + commands.CR)
 		return motor_position_response
 	else: 
 		return send_c4_command(commands.ABORT)

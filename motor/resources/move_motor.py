@@ -19,11 +19,6 @@ class MoveMotor(Resource):
 		serial_return = do_single_movement(id, direction, steps, acknowledge)
 		return {'response': serial_return[1]}, serial_return[0]
 
-def do_single_movement(motor_number, direction, steps, acknowledge):
-	acknowledge_flag = "n" if(acknowledge) else ""
-	pre_parameters = str(motor_number) + direction + str(steps) + acknowledge_flag
-	return send_c4_command(commands.MOVE, pre_parameters)
-
 class MoveMotorList(Resource):
 	def __init__(self):
 		self.reqparse = reqparse.RequestParser()
@@ -45,7 +40,7 @@ class MoveMotorList(Resource):
 		parameters = ""
 
 		try:
-			for i in range(0, axis):
+			for i in range(axis):
 				parameters += commands.MOVE + str(motor_number_list[i]) + str(direction_list[i]) + str(steps_list[i])
 		except IndexError as ie: 
 			return {'response': ("Please, check if every list (motor, direction and steps) has %d elements" %axis)}, 422
@@ -53,14 +48,19 @@ class MoveMotorList(Resource):
 		serial_return = do_multiaxis_movement(parameters, acknowledge)
 		return {'response': serial_return[1]}, serial_return[0]
 
-def do_multiaxis_movement(pre_parameters, acknowledge):
-	if(pre_parameters):
-		pre_parameters += "n" if(acknowledge) else ""
-		return send_c4_command(pre_parameters)
+def do_single_movement(motor_number, direction, steps, acknowledge):
+	acknowledge_flag = "n" if(acknowledge) else ""
+	pre_parameters = str(motor_number) + direction + str(steps) + acknowledge_flag
+	return send_c4_command(commands.MOVE + pre_parameters)
+
+def do_multiaxis_movement(parameters, acknowledge):
+	if(parameters):
+		parameters += "n" if(acknowledge) else ""
+		return send_c4_command(parameters)
 	else:
 		return [422, "No movements information has been given, command ignored"]
 
 class RequestMotorPosition(Resource):
 	def get(self):
-		serial_return = send_single_command(commands.REQUEST_MOTOR_POSITION)
+		serial_return = send_single_command(commands.REQUEST_MOTOR_POSITION + commands.CR)
 		return {'response': serial_return[1]}, serial_return[0]

@@ -6,7 +6,7 @@ SERIAL_PORT = '/dev/ttyUSB0'
 SERIAL_BAUDRATE = 9600
 C4_ID = "1"
 
-class SerialProcessor:
+class C4SerialProcessor:
 	def __init__(self):
 		self.ser = serial.Serial(
 			port= SERIAL_PORT, 
@@ -21,28 +21,33 @@ class SerialProcessor:
 		time.sleep(0.01)
 		self.ser.close()
 
-	def write_serial(self, writable):
+	def write_serial(self, writable, delay):
+		if delay:
+			time.sleep(0.5)
 		writable_bytes = writable.encode('ascii')	
 		self.ser.write(writable_bytes)
 
 	def read_serial(self):
-		return self.ser.readline()
+		out = ""
+		while self.ser.inWaiting() > 0:
+			out += self.ser.readline()
+		return out
 
-def send_c4_command(command, pre_parameters = "", post_parameters = ""):
-	writable = "!" + C4_ID + command + pre_parameters + commands.CR
+def send_c4_command(command, delay = True):
+	writable = "!" + C4_ID + command + commands.CR
+	return send_to_c4(writable, delay)
+
+def send_single_command(command):
+	return send_to_c4(command, False)
+
+def send_to_c4(writable, delay):
 	serial_response = []
-	
+
 	try:
-		ser = SerialProcessor()
-		ser.write_serial(writable)
+		ser = C4SerialProcessor()
+		ser.write_serial(writable, delay)
 		serial_line = ser.read_serial()
 		serial_response = [200, serial_line]
-
-		if(post_parameters):
-			ser.write_serial(post_parameters)
-			serial_another_line = ser.read_serial()
-			serial_response = [200, [serial_line, serial_another_line]]
-
 		#ser.close_serial()
 	except serial.SerialException as se:
 		serial_response = make_error_response(503, writable, se)
@@ -50,19 +55,6 @@ def send_c4_command(command, pre_parameters = "", post_parameters = ""):
 		serial_response = make_error_response(504, writable, ste)
 	except Exception as e:
 		serial_response = make_error_response(500, writable, e)
-
-	return serial_response
-
-def send_single_command(command):
-	serial_response = []
-
-	try:
-		ser = SerialProcessor()
-		ser.write_serial(command)
-		serial_line = ser.read_serial()
-		serial_response = [200, serial_line]
-	except Exception as e:
-		serial_response = make_error_response(500, command, e)
 
 	return serial_response
 
