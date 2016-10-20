@@ -1,0 +1,42 @@
+{%- extends "bootstrap/base.html" %}
+{% import "bootstrap/utils.html" as utils %}
+<!doctype html>
+<head>
+	<title>{% block title %} {{title or "Stepper Motor Interface"}} {% endblock title %}</title>
+	{% block styles %}{{super()}}{% endblock %}
+	{% block scripts %}{{super()}}{% endblock %}
+</head>
+<body>
+	{% block navbar -%}
+	<nav class="navbar navbar-default">
+		<ul class="nav navbar-nav">
+			<li><a href="#">HOME</a> </li>
+			<li class="divider-vertical"></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					CALIBRAR <b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="{{url_for('caliper.index')}}">CALIBRAR</a></li>
+					<li><a href="{{url_for('caliper.help')}}">AJUDA</a></li>
+				</ul>
+			</li>
+		</ul>
+	</nav>
+	{%- endblock navbar %}
+	{% block content %}
+	<div class="container">
+		{%- with messages = get_flashed_messages(with_categories=True) %}
+		{%- if messages %}
+		<div class="row">
+			{{utils.flashed_messages(messages)}}
+		</div>
+		{%- endif %}
+		{%- endwith %}
+		<div class="jumbotron">
+			<h2>{% block h2 %}{% endblock h2 %}</h2>
+	{%- endblock content%}
+		</div>
+	</div>
+</body>
+</html>

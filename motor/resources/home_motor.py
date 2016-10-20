@@ -4,7 +4,7 @@ import util.commands as commands
 
 class HomeMotor(Resource):
 	def post(self, id):
-		serial_return = send_c4_command(commands.HOME, str(id))
+		serial_return = send_c4_command(commands.HOME + str(id))
 		return {'response': serial_return[1]}, serial_return[0] 
 
 class HomeMotorList(Resource):
@@ -25,7 +25,7 @@ def do_return_home_list(motor_list):
 		motors = ""
 		for motor in motor_list:
 			motors+=str(motor)
-		return send_c4_command(commands.HOME, motors)
+		return send_c4_command(commands.HOME + motors)
 	else:
 		return [422, "No motor information has been given, command ignored"]
 
