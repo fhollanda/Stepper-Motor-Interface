@@ -3,7 +3,7 @@ from flask_restful import Api
 from flask_cors import CORS
 from resources.copyright import Copyright
 
-app = Flask("motor")
+app = Flask("adapter")
 CORS(app)
 
 # @app.before_request
