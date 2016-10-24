@@ -1,0 +1,1 @@
+get_copyright = "http://localhost:5000/motor/api/copyright"
