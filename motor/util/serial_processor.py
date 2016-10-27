@@ -1,6 +1,7 @@
 import time
 import serial
 import commands
+from flask import jsonify
 
 SERIAL_PORT = '/dev/ttyUSB0'
 SERIAL_BAUDRATE = 9600
@@ -60,4 +61,5 @@ def send_to_c4(writable, delay):
 
 def make_error_response(status, data, exception):
 	print("error: " + str(exception))
-	return [status, ["error: Couldn't write: " + data, "cause: " + str(exception)]]
+	json_response = {"error": str("Couldn't write: " + data), "cause": str(exception)}
+	return [status, json_response]
