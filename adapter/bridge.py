@@ -6,11 +6,6 @@ from resources.copyright import Copyright
 app = Flask("adapter")
 CORS(app)
 
-# @app.before_request
-# def only_json():
-#     if request.data and not request.is_json: 
-#         abort(400)
-
 api = Api(app)
 
 #COPYRIGHT
