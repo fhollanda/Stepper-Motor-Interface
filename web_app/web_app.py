@@ -5,7 +5,8 @@ from blueprints.copyright import copyright_blueprint
 import util.helper as helper
 
 app = Flask("web_app")
-app.secret_key = 'web_app_magic'
+app.config.from_object('config')
+
 Bootstrap(app)
 
 app.register_blueprint(caliper_blueprint)

@@ -1,0 +1,1 @@
+get_copyright = "http://localhost:5001/adapter/api/copyright"

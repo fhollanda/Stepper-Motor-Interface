@@ -6,4 +6,17 @@
 	<label>Clique para testar a mensagem de erro:</label>
 	<input type=submit value="OK">
   </form>
+  
+  <hr />
+  
+  <form action="" method="post" name="caliper">
+      {{ form.hidden_tag() }}
+      <p>
+          Motor:<br>
+          {{ form.motor(size=2) }}<br>
+      </p>
+      <p>Inicial: {{ form.initial_position(disabled=True) }}</p>
+      <p>Final: {{ form.final_position(disabled=True) }}</p>
+      <p><input type="submit" value="Testar"></p>
+  </form>
 {% endblock %}
