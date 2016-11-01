@@ -29,10 +29,7 @@ class C4SerialProcessor:
 		self.ser.write(writable_bytes)
 
 	def read_serial(self):
-		out = ""
-		while self.ser.inWaiting() > 0:
-			out += self.ser.readline()
-		return out
+		return self.ser.readline()
 
 def send_c4_command(command, delay = True):
 	writable = "!" + C4_ID + command + commands.CR
