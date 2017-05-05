@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, abort
 from util.serial_processor import send_c4_command, send_single_command
 import util.commands as commands
 
@@ -17,7 +17,7 @@ class MoveMotor(Resource):
 		acknowledge = args['acknowledge']
 
 		serial_return = do_single_movement(id, direction, steps, acknowledge)
-		return {'response': serial_return[1]}, serial_return[0]
+		return {'response': serial_return}, 200
 
 class MoveMotorList(Resource):
 	def __init__(self):
@@ -43,10 +43,10 @@ class MoveMotorList(Resource):
 			for i in range(axis):
 				parameters += commands.MOVE + str(motor_number_list[i]) + str(direction_list[i]) + str(steps_list[i])
 		except IndexError as ie: 
-			return {'response': ("Please, check if every list (motor, direction and steps) has %d elements" %axis)}, 422
+			abort(422, response=("Please, check if every list (motor, direction and steps) has %d elements" %axis))
 
 		serial_return = do_multiaxis_movement(parameters, acknowledge)
-		return {'response': serial_return[1]}, serial_return[0]
+		return {'response': serial_return}, 200
 
 def do_single_movement(motor_number, direction, steps, acknowledge):
 	acknowledge_flag = "n" if(acknowledge) else ""
@@ -58,9 +58,9 @@ def do_multiaxis_movement(parameters, acknowledge):
 		parameters += "n" if(acknowledge) else ""
 		return send_c4_command(parameters)
 	else:
-		return [422, "No movements information has been given, command ignored"]
+		abort(422, message="No movements information has been given, command ignored")
 
 class RequestMotorPosition(Resource):
 	def get(self):
 		serial_return = send_single_command(commands.REQUEST_MOTOR_POSITION + commands.CR)
-		return {'response': serial_return[1]}, serial_return[0]
+		return {'response': serial_return}, 200

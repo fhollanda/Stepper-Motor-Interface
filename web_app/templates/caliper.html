@@ -2,7 +2,7 @@
 {% block h2 %}Calibrar motor{% endblock %}
 {% block content %}
 {{super()}}
-  <form action="/caliper/do" method=post>
+  <form action="/caliper/test" method=post>
 	<label>Clique para testar a mensagem de erro:</label>
 	<input type=submit value="OK">
   </form>
@@ -12,11 +12,20 @@
   <form action="" method="post" name="caliper">
       {{ form.hidden_tag() }}
       <p>
-          Motor:<br>
-          {{ form.motor(size=2) }}<br>
+      Motor: {{ form.motor(size=2) }} *
+      {% for error in form.motor.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
       </p>
-      <p>Inicial: {{ form.initial_position(disabled=True) }}</p>
-      <p>Final: {{ form.final_position(disabled=True) }}</p>
+
+      <p>
+      Inicial: {{ form.initial_position(disabled=True) }}
+      </p>
+
+      <p>
+      Final: {{ form.final_position(disabled=True) }}
+      </p>
+
       <p><input type="submit" value="Testar"></p>
   </form>
 {% endblock %}

@@ -1,31 +1,48 @@
-# encoding: utf-8
 import requests
+import logging
+import util.helper as helper
+from flask_restful import abort
 
-err000 = u"Ocorreu um erro, tente novamente mais tarde (err: x000)"
-err001 = u"Ocorreu um erro na conexão. Tente novamente ou verifique o funcionamento do motor (err: x001)"
-err002 = u"Há alguma falha no funcionamento do adaptador. Verifique os logs (err: x002)"
-err503 = u"O serviço se encontra indisponível, tente novamente mais tarde (err: x503)"
+def post_data(endpoint, payload = None):
+	response = wrap_request("POST", endpoint, json=payload)
+	return response
+	
+def get_data(endpoint):	
+	response = wrap_request("GET", endpoint)
+	return response
 
-def get_response(endpoint):	
+def wrap_request(method, endpoint, **kwargs):
 	try:
-		response = requests.request("GET", endpoint)
-		status_code = response.status_code
-
-		if(status_code == requests.codes.ok):
-			json_response_message = response.json()['response']
-			return to_json(json_response_message)
+		response = requests.request(method, endpoint, **kwargs)
+		if(response.status_code == requests.codes.ok):
+			return response
 		else:
-			return show_message_for(status_code), status_code
-	except requests.exceptions.RequestException as e:
-		return to_json(err001), 500
+			response.raise_for_status()
+	except requests.exceptions.HTTPError as e:
+		logging.info(e)
+		print(e)
+		return error_response(e.response.status_code, response)
+	except requests.exceptions.RequestException as re:
+		logging.info(re)
+		abort(500, message=helper.ERROR['REQUEST_EXCEPTION'])
 	except Exception as ex:
-		return to_json(err002), 500
+		logging.info(ex)
+		abort(500, message=helper.ERROR['GENERIC_REQUEST_EXCEPTION'])
 
-def show_message_for(status_code):
+	'''
+	This HTTPError exception handling should only be used for translations
+	For english version, the 'requests' library already has the text reason 
+	See more:
+	https://github.com/kennethreitz/requests/blob/master/requests/models.py  
+	https://github.com/kennethreitz/requests/blob/master/requests/status_codes.py
+
+	'''
+def error_response(status_code, response):
 	if(status_code == requests.codes.unavailable):
-		return to_json(err503)
+		abort(status_code, message=helper.ERROR['UNAVAILABLE_SERVICE'])
+	elif(status_code == requests.codes.not_found):
+		abort(status_code, message=helper.ERROR['NOT_FOUND'])
+	elif(status_code == requests.codes.unprocessable_entity):
+		abort(status_code, message=helper.ERROR['UNPROCESSABLE_ENTITY'])
 	else:
-		return to_json(err000)
-
-def to_json(msg):
-	return { 'message' : msg }
+		abort(status_code, message=helper.ERROR['GENERIC_HTTP_ERROR'].format(response))

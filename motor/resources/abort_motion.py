@@ -13,7 +13,7 @@ class AbortMotion(Resource):
 		get_steps_taken = args['request_position']
 
 		serial_return = do_abort(get_steps_taken)
-		return {'response': serial_return[1]}, serial_return[0]
+		return {'response': serial_return}, 200
 
 def do_abort(get_steps_taken):
 	if(get_steps_taken):

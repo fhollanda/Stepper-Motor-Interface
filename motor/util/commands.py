@@ -1,5 +1,5 @@
 # Carriage Return
-CR = "\r"
+CR = "\r\n"
 
 # Request motor positon
 REQUEST_MOTOR_POSITION = "rp"

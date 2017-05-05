@@ -1,11 +1,11 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, abort
 from util.serial_processor import send_c4_command, send_single_command
 import util.commands as commands
 
 class HomeMotor(Resource):
 	def post(self, id):
 		serial_return = send_c4_command(commands.HOME + str(id))
-		return {'response': serial_return[1]}, serial_return[0] 
+		return {'response': serial_return}, 200 
 
 class HomeMotorList(Resource):
 	def __init__(self):
@@ -18,7 +18,7 @@ class HomeMotorList(Resource):
 		motor_list = args['motor_list']
 
 		serial_return = do_return_home_list(motor_list)
-		return {'response': serial_return[1]}, serial_return[0] 
+		return {'response': serial_return}, 200 
 
 def do_return_home_list(motor_list):
 	if(motor_list):
@@ -27,9 +27,9 @@ def do_return_home_list(motor_list):
 			motors+=str(motor)
 		return send_c4_command(commands.HOME + motors)
 	else:
-		return [422, "No motor information has been given, command ignored"]
+		abort(422, message="No movements information has been given, command ignored")
 
 class AbortHomeCommand(Resource):
 	def post(self):
 		serial_return = send_single_command(commands.ABORT)
-		return {'response': serial_return[1]}, serial_return[0] 
+		return {'response': serial_return}, 200 
