@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block h2 %}Varredura{% endblock %}
+{% block submenu %}
+	<ul class="nav nav-pills nav-justified">
+		<li><a href="{{url_for('movement.move_1d')}}">Varredura 1D</a></li>
+		<li><a href="{{url_for('movement.move_2d')}}">Varredura 2D</a></li>
+		<li><a href="{{url_for('movement.move_3d')}}">Varredura 3D</a></li>
+	</ul>
+{% endblock submenu %}
+{% block content %}
+{{super()}}
+	{% block subcontent %}
+	Escolha uma das opções para continuar
+	{% endblock subcontent %}
+{% endblock %}
