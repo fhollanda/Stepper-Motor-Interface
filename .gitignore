@@ -3,6 +3,8 @@
 *.pyc
 *.db
 env/
+comm/
+data_*
 build/
 develop-eggs/
 dist/
