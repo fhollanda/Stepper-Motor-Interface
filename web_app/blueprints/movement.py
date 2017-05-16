@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, flash, g, Markup
-from forms import Move1DForm
+from forms import Move1DForm, Move2DForm
 import util.helper as helper
 import util.endpoint as endpoint
 from util.request_wrapper import post_data
@@ -12,6 +12,7 @@ HELP = helper.HELP['MOVE']
 @movement_blueprint.before_request
 def before_request():
 	g.move1d_form = Move1DForm()
+	g.move2d_form = Move2DForm()
 
 @movement_blueprint.route("/", methods=["GET"])
 def index():
@@ -28,9 +29,6 @@ def move_1d():
 			'acquisition_rate': form.acquisition_rate.data 
 		}
 
-		steps = form.steps.data
-		acquisition_rate = form.acquisition_rate.data
-
 		response = post_data(endpoint.movement + "/{}".format(form.axis_radio.data), data)
 		flash('%s |||| %s |||| Dados enviados foram: Eixo="%s", Direcao="%s", Passos=%s, Passos por pontos=%s'  %
 		(response, data, form.axis_radio.data, form.direction_radio.data, form.steps.data, form.acquisition_rate.data))
@@ -41,7 +39,24 @@ def move_1d():
 
 @movement_blueprint.route("/move2d", methods=["GET", "POST"])
 def move_2d():
-	return render_template("move2d.html", title=TITLE)
+	form = g.get("move2d_form")
+
+	if form.validate_on_submit():
+		data = {
+			'primary_axis': form.axis_radio.data,
+			'direction': form.direction_radio.data, 
+			'steps':  form.steps.data, 
+			'acquisition_rate': form.acquisition_rate.data,
+			'secondary_axis': form.axis_secondary_radio.data,
+			'acquisition_offset_rate': form.acquisition_offset_rate.data
+		}
+
+		response = post_data(endpoint.movement, data)
+		flash('%s |||| %s ||||'  % (response, data))
+
+		return render_template("move2d.html", title=TITLE, form=form)
+
+	return render_template("move2d.html", title=TITLE, form=form)
 
 @movement_blueprint.route("/move3d", methods=["GET", "POST"])
 def move_3d():

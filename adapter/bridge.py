@@ -2,7 +2,7 @@ from flask import Flask, request, abort
 from flask_restful import Api
 from flask_cors import CORS
 from resources.copyright import Copyright
-from resources.movement import SingleAxisMove, MultipleAxisMove
+from resources.movement import SingleAxisMove, DoubleAxisMove
 
 app = Flask("adapter")
 CORS(app)
@@ -19,7 +19,7 @@ api.add_resource(Copyright, '/adapter/api/copyright')
 
 #MOVEMENT
 api.add_resource(SingleAxisMove, '/adapter/api/move/<axis>')
-api.add_resource(MultipleAxisMove, '/adapter/api/move')
+api.add_resource(DoubleAxisMove, '/adapter/api/move')
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5001)

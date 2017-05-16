@@ -22,6 +22,18 @@ def save_data_file(data):
 
 class CaptureWaveform(Resource):
 	def __init__(self):
+		super(CaptureWaveform, self).__init__()
+
+	def get(self):
+		data = channel1.get_waveform()
+
+		if(DEFAULT_SAVE_DATA):
+			save_data_file(data)
+
+		return {'data': data}, 200
+
+class ConfigureScopeParams(Resource):
+	def __init__(self):
 		self.reqparse = reqparse.RequestParser()
 		self.reqparse.add_argument('channel', type = int, required = False, location = 'json')
 		self.reqparse.add_argument('frequency', type = int, required = False, location = 'json')
@@ -30,22 +42,7 @@ class CaptureWaveform(Resource):
 		self.reqparse.add_argument('v_scale', type = int, required = False, location = 'json')
 		self.reqparse.add_argument('t_scale', type = int, required = False, location = 'json')
 		self.reqparse.add_argument('save_data', type = bool, required = False, location = 'json')
-		super(CaptureWaveform, self).__init__()
-
-	def get(self):
-		scope.set_hScale(frequency=DEFAULT_FREQUENCY, cycles=DEFAULT_CYCLES)    	
-		scope.set_averaging(DEFAULT_AVERAGING)
-
-		channel1.set_vScale(DEFAULT_V_SCALE)                      		
-		channel1.set_tScale(DEFAULT_T_SCALE)
-		channel1.set_waveformParams(DEFAULT_ENCODING)
-
-		data = channel1.get_waveform()
-
-		if(DEFAULT_SAVE_DATA):
-			save_data_file(data)
-
-		return {'data': data}, 200
+		super(ConfigureScopeParams, self).__init__()
 
 	def post(self):
 		args = self.reqparse.parse_args()
@@ -57,23 +54,23 @@ class CaptureWaveform(Resource):
 		t_scale = args['t_scale']
 		save_data = args['save_data']
 
-		channel = get_channel_by_number(channel or DEFAULT_CHANNEL)
+		try:
+			channel = get_channel_by_number(channel or DEFAULT_CHANNEL)
 
-		scope.set_hScale(frequency=(frequency or DEFAULT_FREQUENCY), cycles=(cycles or DEFAULT_CYCLES))    	
-		scope.set_averaging((averaging or DEFAULT_AVERAGING))
+			scope.set_hScale(frequency=(frequency or DEFAULT_FREQUENCY), cycles=(cycles or DEFAULT_CYCLES))    	
+			scope.set_averaging((averaging or DEFAULT_AVERAGING))
 
-		channel.set_vScale((v_scale or DEFAULT_V_SCALE))   
-		channel.set_tScale((t_scale or DEFAULT_T_SCALE))
-		channel1.set_waveformParams(DEFAULT_ENCODING)                   		
+			channel.set_vScale((v_scale or DEFAULT_V_SCALE))   
+			channel.set_tScale((t_scale or DEFAULT_T_SCALE))
+			channel.set_waveformParams(DEFAULT_ENCODING)			
+		except Exception as e:
+			abort(500, cause=str(e), error=("Couldn't acquire data"))                  		
 
-		data = channel.get_waveform()
+		return {'data': "OK"}, 200
 
-		if((save_data or DEFAULT_SAVE_DATA)):
-			save_data_file(data)
-
-		return {'data': data}, 200
 
 api.add_resource(CaptureWaveform, '/oscilloscope/api/acquire')
+api.add_resource(ConfigureScopeParams, '/oscilloscope/api/config')
 
 def definition():
 	global DEFAULT_CHANNEL
@@ -93,11 +90,11 @@ def definition():
 
 	DEFAULT_CHANNEL = 1
 	DEFAULT_FREQUENCY = 1000000
-	DEFAULT_CYCLES = 2
+	DEFAULT_CYCLES = 1
 	DEFAULT_AVERAGING = 64
-	DEFAULT_V_SCALE = 0.1
-	DEFAULT_T_SCALE = 0.000001
-	DEFAULT_SAVE_DATA = True
+	DEFAULT_V_SCALE = 0.02
+	DEFAULT_T_SCALE = 0.0000025
+	DEFAULT_SAVE_DATA = False
 	DEFAULT_ENCODING = 'RPBinary'
 
 	try: 
@@ -125,4 +122,12 @@ def get_channel_by_number(channel_number):
 
 if __name__ == '__main__':
 	definition()
+
+	scope.set_hScale(frequency=DEFAULT_FREQUENCY, cycles=DEFAULT_CYCLES)    	
+	scope.set_averaging(DEFAULT_AVERAGING)
+
+	channel1.set_vScale(DEFAULT_V_SCALE)                      		
+	channel1.set_tScale(DEFAULT_T_SCALE)
+	channel1.set_waveformParams(DEFAULT_ENCODING)
+
 	app.run(debug=True, port=5003)

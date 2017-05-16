@@ -2,5 +2,67 @@
 {% block h2 %}Varredura com duas dimensões{% endblock %}
 {{super()}}
 {% block subcontent %}
-TODO 2d
+<form action="" method="post" name="move2d_form" class="form-horizontal">
+	{{ form.hidden_tag() }}
+	{% for error in form.steps.errors %}
+		<span style="color: red;">{{ error }}</span>
+	{% endfor %}<br>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="axis">Eixo:</label> 
+		{% for axis in form.axis_radio %}
+			<label class="radio-inline">
+				{{ axis }}{{ axis.label }}
+			</label>
+		{% endfor %}
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="direction">Direção:</label> 
+		{% for direction in form.direction_radio %}
+			<label class="radio-inline">
+				{{ direction }}{{ direction.label }}
+			</label>
+		{% endfor %}
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="steps">Passos:</label>
+		<div class="col-sm-10"> 
+			{{ form.steps(size=4, class_="form-control") }}
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="acquisition_rate">Passos por pontos:</label>
+		<div class="col-sm-10"> 
+			{{ form.acquisition_rate(size=2, class_="form-control") }}
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="axis_secondary">Eixo secundário:</label> 
+		{% for axis_secondary in form.axis_secondary_radio %}
+			{% if not form.axis_radio.data == axis_secondary.data %}
+			<label class="radio-inline">
+				{{ axis_secondary }}{{ axis_secondary.label }}
+			</label>
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="acquisition_offset_rate">Deslocamento eixo secundário:</label>
+		<div class="col-sm-10"> 
+			{{ form.acquisition_offset_rate(size=2, class_="form-control") }}
+		</div>
+		<p>(o deslocamento será de 1 ponto)</p>
+	</div>
+	
+	<div class="form-group"> 
+		<div class="col-sm-offset-2 col-sm-10">
+			<input type="submit" value="Testar" class="btn btn-primary">
+		</div>
+	</div>
+</form>
 {% endblock %}

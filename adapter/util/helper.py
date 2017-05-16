@@ -15,5 +15,8 @@ MOVE = {
 	'motor_number': REQUIRED_FIELD.format(u"que informa o número do motor").encode('utf-8'),
 	'direction': REQUIRED_FIELD.format(u"direção").encode('utf-8'),
 	'steps': REQUIRED_FIELD.format(u"passos"),
-	'acquisition_rate': REQUIRED_FIELD.format(u"informando a quantidade de passos por pontos")
+	'acquisition_rate': REQUIRED_FIELD.format(u"informando a quantidade de passos por pontos"),
+	'primary_axis': REQUIRED_FIELD.format(u"que informa o eixo principal"),
+	'secondary_axis': REQUIRED_FIELD.format(u"que informa o eixo secundário").encode('utf-8'),
+	'acquisition_offset_rate': REQUIRED_FIELD.format(u"com o deslocamento do eixo secundário").encode('utf-8') 
 }

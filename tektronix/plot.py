@@ -15,7 +15,7 @@ scope.set_averaging(64)                        		# Set the scope to do 0X averag
 channel1.set_vScale(50)                      		# Set the voltage scale to 200mV
 
 # aquisicao do sinal
-data_adc_d_p = channel1.get_waveform()#_autoRange()                         # Download the waveform from channel 1
+data_adc_d_p = channel1.get_measurement()#_autoRange()                         # Download the waveform from channel 1
 
 
 # elementos necessarios apenas para apresentacao ----------------
