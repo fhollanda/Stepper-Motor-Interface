@@ -24,8 +24,16 @@ class CaptureWaveform(Resource):
 	def __init__(self):
 		super(CaptureWaveform, self).__init__()
 
-	def get(self):
-		data = channel1.get_waveform()
+	def get(self, id = None):
+		try:
+			if(id):
+				selected_channel = get_channel_by_number(id)
+				data = selected_channel.get_waveform()
+			else:
+				data = channel1.get_waveform()
+		except Exception as e:
+			abort(500, cause=str(e), error=("Couldn't acquire data"))
+
 
 		if(DEFAULT_SAVE_DATA):
 			save_data_file(data)
@@ -35,18 +43,18 @@ class CaptureWaveform(Resource):
 class ConfigureScopeParams(Resource):
 	def __init__(self):
 		self.reqparse = reqparse.RequestParser()
-		self.reqparse.add_argument('channel', type = int, required = False, location = 'json')
+		self.reqparse.add_argument('channel', type = int, required = True, help = "Post used channel", location = 'json')
 		self.reqparse.add_argument('frequency', type = int, required = False, location = 'json')
 		self.reqparse.add_argument('cycles', type = int, required = False, location = 'json')
 		self.reqparse.add_argument('averaging', type = int, required = False, location = 'json')
-		self.reqparse.add_argument('v_scale', type = int, required = False, location = 'json')
-		self.reqparse.add_argument('t_scale', type = int, required = False, location = 'json')
+		self.reqparse.add_argument('v_scale', type = float, required = False, location = 'json')
+		self.reqparse.add_argument('t_scale', type = float, required = False, location = 'json')
 		self.reqparse.add_argument('save_data', type = bool, required = False, location = 'json')
 		super(ConfigureScopeParams, self).__init__()
 
 	def post(self):
 		args = self.reqparse.parse_args()
-		channel = args['channel']
+		selected_channel = args['channel']
 		frequency = args['frequency']
 		cycles = args['cycles']
 		averaging = args['averaging']
@@ -55,21 +63,21 @@ class ConfigureScopeParams(Resource):
 		save_data = args['save_data']
 
 		try:
-			channel = get_channel_by_number(channel or DEFAULT_CHANNEL)
+			selected_channel = get_channel_by_number(selected_channel or DEFAULT_CHANNEL)
 
 			scope.set_hScale(frequency=(frequency or DEFAULT_FREQUENCY), cycles=(cycles or DEFAULT_CYCLES))    	
 			scope.set_averaging((averaging or DEFAULT_AVERAGING))
 
-			channel.set_vScale((v_scale or DEFAULT_V_SCALE))   
-			channel.set_tScale((t_scale or DEFAULT_T_SCALE))
-			channel.set_waveformParams(DEFAULT_ENCODING)			
+			selected_channel.set_vScale((v_scale or DEFAULT_V_SCALE))   
+			selected_channel.set_tScale((t_scale or DEFAULT_T_SCALE))
+			selected_channel.set_waveformParams(DEFAULT_ENCODING)			
 		except Exception as e:
-			abort(500, cause=str(e), error=("Couldn't acquire data"))                  		
+			abort(500, cause=str(e), error=("Couldn't send config data"))                  		
 
 		return {'data': "OK"}, 200
 
 
-api.add_resource(CaptureWaveform, '/oscilloscope/api/acquire')
+api.add_resource(CaptureWaveform, '/oscilloscope/api/acquire/<id>')
 api.add_resource(ConfigureScopeParams, '/oscilloscope/api/config')
 
 def definition():
@@ -108,17 +116,12 @@ def definition():
 	channel4 = tds2024Cusb.channel(scope, 4)
 
 def get_channel_by_number(channel_number):
-	switcher = {
-		1: channel1,
-		2: channel2,
-		3: channel3,
-		4: channel4,
-	}
-
-	try:
-		return switcher[channel_number]()
-	except KeyError, e:
-		return switcher[DEFAULT_CHANNEL]()
+	return {
+        1: channel1,
+        2: channel2,
+        3: channel3,
+        4: channel4,
+    }.get(channel_number, channel1) 
 
 if __name__ == '__main__':
 	definition()
