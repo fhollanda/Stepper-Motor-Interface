@@ -59,5 +59,5 @@ def send_to_c4(writable, delay):
 	return serial_line or "a"
 
 def log_and_abort(status, data, exception):
-	logging.info("error: " + str(exception))
+	logging.error("error: " + str(exception))
 	abort(status, cause=str(exception), error=str("Couldn't write: " + data))
