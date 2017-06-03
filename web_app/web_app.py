@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from blueprints.caliper import caliper_blueprint
 from blueprints.copyright import copyright_blueprint
@@ -16,7 +16,11 @@ app.register_blueprint(movement_blueprint)
 
 @app.context_processor
 def inject_menu():
-    return dict(menu=helper.MENU)
+    return dict(menu=helper.MENU, fields=helper.FIELDS)
+
+@app.route('/')
+def index():
+    return render_template('movement.html')
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5002),
