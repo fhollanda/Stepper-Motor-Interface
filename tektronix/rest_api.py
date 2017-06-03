@@ -16,7 +16,7 @@ api = Api(app)
 
 def save_data_file(data):
 	ts = time.time()
-	f = open( 'data_'+ str(ts).replace(".","") +'.py', 'w' )
+	f = open( 'data/data_'+ str(ts).replace(".","") +'.temp', 'w' )
 	f.write( 'data = ' + repr(data) + '\n' )
 	f.close()
 
