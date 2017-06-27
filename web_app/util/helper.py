@@ -24,7 +24,7 @@ MENU = {
 
 FIELDS = {
 	#CAMPOS VARREDURA
-	'AXIS': u'Eixo',
+	'AXIS': u'Eixo primário',
 		'X': u'Eixo X',
 		'Y': u'Eixo y',
 		'Z': u'Eixo z',
@@ -34,7 +34,7 @@ FIELDS = {
 	'STEPS': u'Passos',
 	'ACQUISTION_RATE': u'Passos por pontos',
 	'SECONDARY_AXIS': u'Eixo secundário',
-	'TOTAL_STEPS_SECONDARY': u'Quant. total deslocamento secundário',
+	'TOTAL_STEPS_SECONDARY': u'Quant. total de passos deslocamento secundário',
 	'SIZE_STEPS_SECONDARY': u'Quant. passos por deslocamento',
 	'BUTTON': u'Realizar varredura'
 }
