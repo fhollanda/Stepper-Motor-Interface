@@ -1,5 +1,6 @@
 import requests
 import util.helper as helper
+from flask import abort
 
 def get_data(endpoint):
 	try:

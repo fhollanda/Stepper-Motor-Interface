@@ -1,2 +1,3 @@
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'web_app_magic'
+TEMPLATES_AUTO_RELOAD = True

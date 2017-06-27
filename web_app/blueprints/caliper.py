@@ -4,9 +4,6 @@ import util.helper as helper
 
 caliper_blueprint = Blueprint('caliper', __name__, url_prefix='/caliper')
 
-TITLE = helper.TITLE['CALIPER']
-HELP = helper.HELP['CALIPER']
-
 @caliper_blueprint.before_request
 def before_request():
 	g.caliper_form = CaliperForm()
@@ -18,9 +15,9 @@ def caliper():
 	if form.validate_on_submit():
 		flash('Os dados enviados foram: Motor="%s", Inicial=%s, Final=%s' %
 			(form.motor.data, form.initial_position.data, form.final_position.data))
-		return render_template("caliper.html", title=TITLE, form=form)
+		return render_template("caliper.html", form=form)
 
-	return render_template("caliper.html", title=TITLE, form=form)
+	return render_template("caliper.html", form=form)
 
 @caliper_blueprint.route("/test", methods=["POST"])
 def test_caliper():
@@ -28,8 +25,8 @@ def test_caliper():
 
 	if(request.method == "POST"):
 		flash(helper.RANDOM_ERROR, helper.FLASH_ERROR)
-		return render_template("caliper.html", title=TITLE, form=form) 
+		return render_template("caliper.html", form=form) 
 
 @caliper_blueprint.route("/help")
 def help():
-	return render_template("help.html", title=TITLE, index_helper=HELP)
+	return render_template("help.html", subtitle=helper.TITLE['CALIPER'], index_helper=helper.HELP['CALIPER'])

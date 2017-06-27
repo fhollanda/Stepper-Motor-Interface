@@ -1,74 +1,166 @@
 {% extends "movement.html" %}
-{% block h2 %}Varredura com duas dimensões{% endblock %}
+{% block styles %}
+{{super()}}
+	<style>
+		.jumbotron{
+			display: flex
+		}
+	</style>
+{% endblock %}
+{% block title %}{{titles.MOVE2D}}{% endblock %}
 {{super()}}
 {% block subcontent %}
-<form action="" method="post" name="move2d_form" class="form-horizontal">
-	{{ form.hidden_tag() }}
-	{% for error in form.steps.errors %}
-		<span style="color: red;">{{ error }}</span>
-	{% endfor %}<br>
+		<div class="jumbotron col-md-6">
+			<form action="" method="post" name="config_form">
+				{{ config_form.hidden_tag() }}
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="axis">{{fields.AXIS}}:</label> 
-		{% for axis in form.axis_radio %}
-			<label class="radio-inline">
-				{{ axis }}{{ axis.label }}
-			</label>
-		{% endfor %}
-	</div>
+				<legend>{{fields.CONFIG_SCOPE_LEGEND}}</legend>
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="direction">{{fields.DIRECTION}}:</label> 
-		{% for direction in form.direction_radio %}
-			<label class="radio-inline">
-				{{ direction }}{{ direction.label }}
-			</label>
-		{% endfor %}
-	</div>
+				{% if config_form.errors %}
+					<span style="color: red;">{{errors.REQUIRED_FIELD}}</span>
+				{% endif %}
+				{% for field in config_form.errors %}
+				{% for error in config_form.errors[field] %}
+   					<br/><span style="color: red;">- {{ error }}</span>
+				{% endfor %}
+				{% endfor %}
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="steps">{{fields.STEPS}}:</label>
-		<div class="col-sm-10"> 
-			{{ form.steps(size=4, class_="form-control") }}
+				<div class="form-group">
+					<label for="channel">{{fields.CHANNEL}}:</label>
+					<div> 
+						{{ config_form.channel(size=2, class_="form-control") }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="frequency">{{fields.FREQUENCY}}:</label>
+					<div> 
+						{{ config_form.frequency(size=2, class_="form-control") }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="cycles">{{fields.CYCLES}}:</label>
+					<div> 
+						{{ config_form.cycles(size=2, class_="form-control") }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="averaging">{{fields.AVERAGING}}:</label>
+					<div> 
+						{{ config_form.averaging(size=2, class_="form-control") }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="v_scale">{{fields.V_SCALE}}:</label>
+					<div> 
+						{{ config_form.v_scale(size=2, class_="form-control") }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="t_scale">{{fields.T_SCALE}}:</label>
+					<div> 
+						{{ config_form.t_scale(size=2, class_="form-control") }}
+					</div>
+					<small id="config_info" class="form-text text-muted">
+						{{fields.CONFIG_INFO}}
+					</small>
+				</div>
+
+				<div class="form-group"> 
+					<div class="text-right">
+						{{ config_form.set_config(class_="btn btn-primary") }}
+					</div>
+				</div>
+			</form>
 		</div>
-	</div>
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="acquisition_rate">{{fields.ACQUISTION_RATE}}:</label>
-		<div class="col-sm-10"> 
-			{{ form.acquisition_rate(size=2, class_="form-control") }}
-		</div>
-	</div>
+		<div class="jumbotron col-md-6">
+			<form action="" method="post" name="move2d_form">
+				{{ scan_form.hidden_tag() }}
+				<legend>{{fields.SCAN_LEGEND}}</legend>
+				
+				{% if scan_form.errors %}
+					<span style="color: red;">{{errors.REQUIRED_FIELD}}</span>
+				{% endif %}
+				{% for field in scan_form.errors %}
+				{% for error in scan_form.errors[field] %}
+   					<br/><span style="color: red;">- {{ error }}</span>
+				{% endfor %}
+				{% endfor %}
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="axis_secondary">{{fields.SECONDARY_AXIS}}:</label> 
-		{% for axis_secondary in form.axis_secondary_radio %}
-			{% if not form.axis_radio.data == axis_secondary.data %}
-			<label class="radio-inline">
-				{{ axis_secondary }}{{ axis_secondary.label }}
-			</label>
-			{% endif %}
-		{% endfor %}
-	</div>
+				<div class="form-group">
+					<label for="axis">{{fields.AXIS}}:</label><br/>
+					{% for axis in scan_form.axis_radio %}
+						<label class="radio-inline">
+							{{ axis }}{{ axis.label }}
+						</label>
+					{% endfor %}
+				</div>
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="acquisition_offset_rate">{{fields.TOTAL_STEPS_SECONDARY}}:</label>
-		<div class="col-sm-10"> 
-			{{ form.acquisition_offset_rate(size=2, class_="form-control") }}
-		</div>
-	</div>
+				<div class="form-group">
+					<label for="direction">{{fields.DIRECTION}}:</label><br/>
+					{% for direction in scan_form.direction_radio %}
+						<label class="radio-inline">
+							{{ direction }}{{ direction.label }}
+						</label>
+					{% endfor %}
+				</div>
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="secondary_axis_step_size">{{fields.SIZE_STEPS_SECONDARY}}:</label>
-		<div class="col-sm-10"> 
-			{{ form.secondary_axis_step_size(size=2, class_="form-control") }}
+				<div class="form-group">
+					<label for="steps">{{fields.STEPS}}:</label>
+					<div> 
+						{{ scan_form.steps(size=4, class_="form-control") }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="acquisition_rate">{{fields.ACQUISTION_RATE}}:</label>
+					<div> 
+						{{ scan_form.acquisition_rate(size=2, class_="form-control") }}
+					</div>
+					<small id="acquisition_rate_info" class="form-text text-muted">
+						{{fields.ACQUISTION_RATE_INFO}}
+					</small>
+				</div>
+
+				<div class="form-group">
+					<label for="axis_secondary">{{fields.SECONDARY_AXIS}}:</label><br/>
+					{% for axis_secondary in scan_form.axis_secondary_radio %}
+						<label class="radio-inline">
+							{{ axis_secondary }}{{ axis_secondary.label }}
+						</label>
+					{% endfor %}
+				</div>
+
+				<div class="form-group">
+					<label for="secondary_axis_step_size">{{fields.SIZE_STEPS_SECONDARY}}:</label>
+					<div> 
+						{{ scan_form.secondary_axis_step_size(size=2, class_="form-control") }}
+					</div>
+					<small id="acquisition_rate_info" class="form-text text-muted">
+						{{fields.SIZE_STEPS_SECONDARY_INFO}}
+					</small>
+				</div>
+				
+				<div class="form-group">
+					<label for="acquisition_offset_rate">{{fields.TOTAL_STEPS_SECONDARY}}:</label>
+					<div> 
+						{{ scan_form.acquisition_offset_rate(size=2, class_="form-control") }}
+					</div>
+					<small id="acquisition_rate_info" class="form-text text-muted">
+						{{fields.TOTAL_STEPS_SECONDARY_INFO}}
+					</small>
+				</div>
+				
+				<div class="form-group"> 
+					<div class="text-right">
+						{{ scan_form.move2d(class_="btn btn-primary") }}
+					</div>
+				</div>
+			</form>
 		</div>
-	</div>
-	
-	<div class="form-group"> 
-		<div class="col-sm-offset-2 col-sm-10">
-			<input type="submit" value="{{fields.BUTTON}}" class="btn btn-primary">
-		</div>
-	</div>
-</form>
 {% endblock %}

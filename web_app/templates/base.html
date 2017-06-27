@@ -2,7 +2,7 @@
 {% import "bootstrap/utils.html" as utils %}
 <!doctype html>
 <head>
-	<title>{% block title %} {{title or "Stepper Motor Interface"}} {% endblock title %}</title>
+	<title>{% block title %}Stepper Motor Interface{% endblock title %}</title>
 	{% block styles %}{{super()}}{% endblock %}
 	{% block scripts %}{{super()}}{% endblock %}
 </head>
@@ -20,6 +20,7 @@
 				</ul>
 			</li>
 			<li class="divider-vertical"></li>
+			<li><a href="{{url_for('captures.show')}}">{{menu.CAPTURES}}</a> </li>
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{menu.CONFIG}}<b class="caret"></b></a>
 				<ul class="dropdown-menu">
@@ -47,7 +48,7 @@
 		{%- endif %}
 		{%- endwith %}
 		<div class="page-header">
-			<h2>{% block h2 %}{% endblock h2 %}</h2>
+			<h2>{{ self.title() }}</h2>
 		</div>
 		{% block submenu %}
 		{% endblock submenu %}
