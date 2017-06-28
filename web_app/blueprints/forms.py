@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, RadioField, FloatField, SubmitField
+from wtforms import IntegerField, RadioField, DecimalField, SubmitField
 from wtforms.validators import DataRequired
 import util.helper as helper
 
@@ -13,8 +13,8 @@ class ScopeConfigForm(FlaskForm):
 	frequency = IntegerField('frequency', default=1000000)
 	cycles = IntegerField('cycles', default=1)
 	averaging = IntegerField('averaging', default=64)
-	v_scale = FloatField('v_scale', default=0.02)
-	t_scale = FloatField('t_scale', default=0.0000025)
+	v_scale = DecimalField('v_scale', default=0.02)
+	t_scale = DecimalField('t_scale', default=0.0000025, places=7)
 	set_config = SubmitField(helper.FIELDS['SET_CONFIG_BUTTON'])
 
 class Move1DForm(FlaskForm):
