@@ -64,7 +64,7 @@ FIELDS = {
 
 ERROR = {
 	'REQUEST_EXCEPTION': u"Ocorreu algum erro na conexão: {0}",
-	'EXCEPTION': u"Ocorreu um erro que a aplicação não pode tratar normalmente. <br/> Existe a possibilidade de algum serviço estar fora do ar. <br/> Verifique os cabos de conexão, os logs das aplicações e tente novamente.<br/> HTTP Status: 500. <br/> <strong>Motivo do erro:</strong> <br/> {0}",
+	'EXCEPTION': u"Ocorreu um erro que a aplicação não pôde tratar normalmente. <br/> Existe a possibilidade de algum serviço estar fora do ar. <br/> Verifique os cabos de conexão, os logs das aplicações e tente novamente.<br/> HTTP Status: 500. <br/> <strong>Motivo do erro:</strong> <br/> {0}",
 	'SCAN_EXCEPTION': u"Ocorreu um erro durante a varredura. Tente novamente ou verifique os logs das demais aplicações para descobrir a causa. Status HTTP: {0}",
 	'SET_CONFIG_EXCEPTION': u"Ocorreu um erro na hora de enviar os parâmetros para o osciloscópio. Status HTTP: {0}",
 	'REQUIRED_FIELD': u"Por favor, preencha o(s) campo(s) indicado(s):"
