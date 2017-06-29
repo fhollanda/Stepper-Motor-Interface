@@ -6,7 +6,7 @@ import settings
 
 def post_data(endpoint, payload = None, check_settings = False):
 	if(check_settings):
-		if(settings._isRunning):
+		if(settings.isRunning()):
 			return post(endpoint, payload)
 		else:
 			logging.error(helper.ABORT_FLAG)

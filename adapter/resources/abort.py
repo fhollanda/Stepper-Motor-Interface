@@ -5,7 +5,7 @@ import settings
 class Abort(Resource):
 	def post(self):
 		try:
-			settings._isRunning = False
+			settings.end_run()
 			return "OK", 200
 		except Exception as e:
 			return e, 200
