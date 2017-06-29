@@ -36,6 +36,9 @@
 			</li>
 			<li><a href="{{url_for('copyright.show')}}">{{menu.COPYRIGHT}}</a> </li>
 		</ul>
+		<div class="text-right">
+			<input type="submit" onclick="location.href={{url_for('abort.send_abort_signal')}};" value="{{menu.ABORT}}" class="btn btn-danger navbar-btn">
+		</div>
 	</nav>
 	{%- endblock navbar %}
 	{% block content %}

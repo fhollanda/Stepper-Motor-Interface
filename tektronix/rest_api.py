@@ -34,7 +34,6 @@ class CaptureWaveform(Resource):
 		except Exception as e:
 			abort(500, cause=str(e), error=("Couldn't acquire data"))
 
-
 		if(DEFAULT_SAVE_DATA):
 			save_data_file(data)
 

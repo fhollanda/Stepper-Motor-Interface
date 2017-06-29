@@ -8,7 +8,7 @@ TITLE = {
 	'MOVE1D': u"Varredura com uma dimensão",
 	'MOVE2D': u"Varredura com duas dimensões",
 	'MOVE3D': u"Varredura com três dimensões",
-	'HELP': u"Ajuda -- "
+	'HELP': u"Ajuda - "
 }
 
 HELP = {
@@ -18,6 +18,7 @@ HELP = {
 }
 
 MENU = {
+	'ABORT': u"ABORTAR",
 	'CALIPER':	u"CALIBRAR",
 	'CAPTURES': u"CAPTURAS SALVAS",
 	'CONFIG':	u"CONFIGURAÇÕES",
@@ -62,10 +63,10 @@ FIELDS = {
 }
 
 ERROR = {
-	'EXCEPTION':	u"Ocorreu algum erro: {0}",
-	'REQUEST_EXCEPTION':	u"Ocorreu algum erro na conexão: {0}",
-	'SCAN_EXCEPTION': u"Ocorreu um erro durante a varredura. Tente novamente ou verifique os logs das demais aplicações para descobrir a causa",
-	'SET_CONFIG_EXCEPTION': u"Ocorreu um erro na hora de enviar os valores para o osciloscópio",
+	'REQUEST_EXCEPTION': u"Ocorreu algum erro na conexão: {0}",
+	'EXCEPTION': u"Ocorreu um erro que a aplicação não pode tratar normalmente. <br/> Existe a possibilidade de algum serviço estar fora do ar. <br/> Verifique os cabos de conexão, os logs das aplicações e tente novamente.<br/> HTTP Status: 500. <br/> <strong>Motivo do erro:</strong> <br/> {0}",
+	'SCAN_EXCEPTION': u"Ocorreu um erro durante a varredura. Tente novamente ou verifique os logs das demais aplicações para descobrir a causa. Status HTTP: {0}",
+	'SET_CONFIG_EXCEPTION': u"Ocorreu um erro na hora de enviar os parâmetros para o osciloscópio. Status HTTP: {0}",
 	'REQUIRED_FIELD': u"Por favor, preencha o(s) campo(s) indicado(s):"
 }
 
@@ -73,3 +74,5 @@ FLASH = 		'flash'
 FLASH_ERROR = 	'error'
 RANDOM_ERROR = 	u"Apenas testando a box de erro"
 SET_CONFIG_OK = u"Configurações enviadas com sucesso para o osciloscópio"
+SCAN_OK = u"O arquivo já está disponível para ser baixado na aba de capturas salvas"
+ABORT_OK = u"Foi enviado o comando para abortar a operação e o status retornado foi <strong>{}</strong>, aperte o botão de retornar no navegador para recomeçar o procedimento"

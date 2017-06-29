@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, flash, g, Markup, send_fi
 from forms import Move1DForm, Move2DForm, ScopeConfigForm
 import util.helper as helper
 import util.endpoint as endpoint
-from util.request_wrapper import post_data
+import util.request_wrapper as requests
 import StringIO, uuid, json
 
 movement_blueprint = Blueprint('movement', __name__, url_prefix='/movement')
@@ -29,21 +29,22 @@ def move_1d():
 			'acquisition_rate': scan_form.acquisition_rate.data 
 		}
 
-		response = post_data(endpoint.movement + "/{}".format(scan_form.axis_radio.data), data)
+		response = requests.post_data(endpoint.movement + "/{}".format(scan_form.axis_radio.data), data)
 
 		if(response):
-			return send_file(create_file(response), attachment_filename=create_name(), as_attachment=True)
+			flash(helper.SCAN_OK)
+			#return send_file(create_file(response), attachment_filename=create_name(), as_attachment=True)
 		else:
-			flash(helper.SCAN_EXCEPTION, helper.FLASH_ERROR)
+			flash(helper.ERROR['SCAN_EXCEPTION'].format(response.status_code), helper.FLASH_ERROR)
 	elif config_form.set_config.data and config_form.validate_on_submit():
 		data = wrap_configs(config_form)
 
-		response = post_data(endpoint.set_scope_config, data)
+		response = requests.post_data(endpoint.set_scope_config, data)
 
 		if(response):
 			flash(helper.SET_CONFIG_OK)
 		else:
-			flash(helper.SET_CONFIG_EXCEPTION, helper.FLASH_ERROR)
+			flash(helper.ERROR['SET_CONFIG_EXCEPTION'].format(response.status_code), helper.FLASH_ERROR)
 
 	return render_template("move1d.html", scan_form=scan_form, config_form=config_form)
 
@@ -63,22 +64,22 @@ def move_2d():
 			'secondary_axis_step_size': scan_form.secondary_axis_step_size.data
 		}
 
-		response = post_data(endpoint.movement, data)
+		response = requests.post_data(endpoint.movement, data)
 
 		if(response):
-			return send_file(create_file(response), attachment_filename=create_name(), as_attachment=True)
+			flash(helper.SCAN_OK)
 		else:
-			flash(helper.SCAN_EXCEPTION, helper.FLASH_ERROR)
+			flash(helper.ERROR['SCAN_EXCEPTION'].format(response.status_code), helper.FLASH_ERROR)
 
 	elif config_form.set_config.data and config_form.validate_on_submit():
 		data = wrap_configs(config_form)
 
-		response = post_data(endpoint.set_scope_config, data)
+		response = requests.post_data(endpoint.set_scope_config, data)
 
 		if(response):
 			flash(helper.SET_CONFIG_OK)
 		else:
-			flash(helper.SET_CONFIG_EXCEPTION, helper.FLASH_ERROR)
+			flash(helper.ERROR['SET_CONFIG_EXCEPTION'].format(response.status_code), helper.FLASH_ERROR)
 
 	return render_template("move2d.html", scan_form=scan_form, config_form=config_form)
 
@@ -96,8 +97,8 @@ def wrap_configs(form):
 		'frequency': form.frequency.data,
 		'cycles': form.cycles.data,
 		'averaging': form.averaging.data,
-		'v_scale': form.v_scale.data,
-		't_scale': form.t_scale.data 
+		'v_scale': float(form.v_scale.data),
+		't_scale': float(form.t_scale.data) 
 	}
 
 def create_file(response):

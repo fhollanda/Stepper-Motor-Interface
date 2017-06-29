@@ -34,7 +34,7 @@ class ConfigureScopeParams(Resource):
 	def post(self):
 		return {'data': "OK"}, 200
 
-api.add_resource(CaptureWaveform, '/oscilloscope/api/acquire')
+api.add_resource(CaptureWaveform, '/oscilloscope/api/acquire/<id>')
 api.add_resource(ConfigureScopeParams, '/oscilloscope/api/config')
 
 if __name__ == '__main__':

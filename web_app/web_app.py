@@ -4,6 +4,7 @@ from blueprints.caliper import caliper_blueprint
 from blueprints.copyright import copyright_blueprint
 from blueprints.movement import movement_blueprint
 from blueprints.captures import captures_blueprint
+from blueprints.abort import abort_blueprint
 import util.helper as helper
 
 app = Flask("web_app")
@@ -15,6 +16,11 @@ app.register_blueprint(caliper_blueprint)
 app.register_blueprint(copyright_blueprint)
 app.register_blueprint(captures_blueprint)
 app.register_blueprint(movement_blueprint)
+app.register_blueprint(abort_blueprint)
+
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+   return helper.ERROR['EXCEPTION'].format(error), 500
 
 @app.context_processor
 def inject_menu():
@@ -25,5 +31,5 @@ def index():
     return render_template('movement.html')
 
 if __name__ == '__main__':
-	app.run(debug=True, port=5002),
+	app.run(debug=True, port=5002, threaded=True),
 	use_reloader=True

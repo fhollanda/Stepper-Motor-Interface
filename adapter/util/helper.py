@@ -24,4 +24,6 @@ MOVE = {
 	'secondary_axis_step_size': REQUIRED_FIELD.format(u"com o tamanho do deslocamento").encode('utf-8')
 }
 
-FIELDS = u"Houve um erro com os campos necessários para realizar essa requisição." 
+FIELDS = u"Houve um erro com os campos necessários para realizar essa requisição" 
+
+ABORT_FLAG = u"O programa foi abortado pelo usuário"

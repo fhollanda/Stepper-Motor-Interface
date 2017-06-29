@@ -2,8 +2,19 @@ import requests
 import logging
 import util.helper as helper
 from flask_restful import abort
+import settings
 
-def post_data(endpoint, payload = None):
+def post_data(endpoint, payload = None, check_settings = False):
+	if(check_settings):
+		if(settings._isRunning):
+			return post(endpoint, payload)
+		else:
+			logging.error(helper.ABORT_FLAG)
+			abort(500)
+	else:
+		return post(endpoint, payload)
+		
+def post(endpoint, payload = None):
 	response = wrap_request("POST", endpoint, json=payload)
 	return response
 	
@@ -19,14 +30,13 @@ def wrap_request(method, endpoint, **kwargs):
 		else:
 			response.raise_for_status()
 	except requests.exceptions.HTTPError as e:
-		logging.info(e)
-		print(e)
+		logging.error(e)
 		return error_response(e.response.status_code, response)
 	except requests.exceptions.RequestException as re:
-		logging.info(re)
+		logging.error(re)
 		abort(500, message=helper.ERROR['REQUEST_EXCEPTION'])
 	except Exception as ex:
-		logging.info(ex)
+		logging.error(ex)
 		abort(500, message=helper.ERROR['GENERIC_REQUEST_EXCEPTION'])
 
 	'''
