@@ -24,13 +24,9 @@ class CaptureWaveform(Resource):
 	def __init__(self):
 		super(CaptureWaveform, self).__init__()
 
-	def get(self, id = None):
+	def get(self):
 		try:
-			if(id):
-				selected_channel = get_channel_by_number(id)
-				data = selected_channel.get_waveform()
-			else:
-				data = channel1.get_waveform()
+			data = selected_channel.get_waveform()
 		except Exception as e:
 			abort(500, cause=str(e), error=("Couldn't acquire data"))
 
@@ -53,7 +49,7 @@ class ConfigureScopeParams(Resource):
 
 	def post(self):
 		args = self.reqparse.parse_args()
-		selected_channel = args['channel']
+		post_channel = args['channel']
 		frequency = args['frequency']
 		cycles = args['cycles']
 		averaging = args['averaging']
@@ -62,7 +58,10 @@ class ConfigureScopeParams(Resource):
 		save_data = args['save_data']
 
 		try:
-			selected_channel = get_channel_by_number(selected_channel or DEFAULT_CHANNEL)
+			selected_channel = get_channel_by_number(post_channel or DEFAULT_CHANNEL)
+
+			global channel_to_acquire
+			channel_to_acquire = selected_channel
 
 			scope.set_hScale(frequency=(frequency or DEFAULT_FREQUENCY), cycles=(cycles or DEFAULT_CYCLES))    	
 			scope.set_averaging((averaging or DEFAULT_AVERAGING))
@@ -76,7 +75,7 @@ class ConfigureScopeParams(Resource):
 		return {'data': "OK"}, 200
 
 
-api.add_resource(CaptureWaveform, '/oscilloscope/api/acquire/<id>')
+api.add_resource(CaptureWaveform, '/oscilloscope/api/acquire')
 api.add_resource(ConfigureScopeParams, '/oscilloscope/api/config')
 
 def definition():
@@ -95,6 +94,8 @@ def definition():
 	global channel3
 	global channel4	
 
+	global channel_to_acquire
+
 	DEFAULT_CHANNEL = 1
 	DEFAULT_FREQUENCY = 1000000
 	DEFAULT_CYCLES = 1
@@ -103,6 +104,8 @@ def definition():
 	DEFAULT_T_SCALE = 0.0000025
 	DEFAULT_SAVE_DATA = False
 	DEFAULT_ENCODING = 'RPBinary'
+
+	channel_to_acquire = DEFAULT_CHANNEL
 
 	try: 
 		scope = tds2024Cusb.tek2024('/dev/usbtmc0')
@@ -128,8 +131,8 @@ if __name__ == '__main__':
 	scope.set_hScale(frequency=DEFAULT_FREQUENCY, cycles=DEFAULT_CYCLES)    	
 	scope.set_averaging(DEFAULT_AVERAGING)
 
-	channel1.set_vScale(DEFAULT_V_SCALE)                      		
-	channel1.set_tScale(DEFAULT_T_SCALE)
-	channel1.set_waveformParams(DEFAULT_ENCODING)
+	channel_to_acquire.set_vScale(DEFAULT_V_SCALE)                      		
+	channel_to_acquire.set_tScale(DEFAULT_T_SCALE)
+	channel_to_acquire.set_waveformParams(DEFAULT_ENCODING)
 
 	app.run(debug=True, port=5003)
