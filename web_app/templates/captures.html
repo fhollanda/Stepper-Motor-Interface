@@ -21,7 +21,7 @@
 	}
 </style>
 {% endblock %}
-{% block content %}
+{% block jumbotron %}
 {{super()}}
 	{% if captures %}
 		{% for key, values in captures.items() %}
@@ -32,16 +32,16 @@
 								<h4>{{ values[0] }}</h4>
 							</div>
 							<div class="hover-btn">
-								<button type="submit" class="btn btn-default btn-sm">
-								<span class="glyphicon glyphicon-remove"></span>
-								{{ fields.REMOVE }}
-								</button>							
+								<a href="{{url_for('captures.delete', uuid=key)}}" class="btn btn-default btn-sm">
+									<span class="glyphicon glyphicon-remove"></span>
+									{{ fields.REMOVE }}	
+								</a>		
 							</div>
 						</div>
 					<div>
-						<input type="submit" value="JSON" class="btn btn-success navbar-btn btn-sm">	
-						<input type="submit" value="MATLAB" class="btn btn-info navbar-btn btn-sm">	
-						<input type="submit" value="CSV" class="btn btn-primary navbar-btn btn-sm">	
+						<a href="{{url_for('captures.get_specific', uuid=key, fileformat='json')}}" class="btn btn-success btn-sm">JSON <span class="glyphicon glyphicon-download-alt"></span></a>
+						<a href="{{url_for('captures.get_specific', uuid=key, fileformat='matlab')}}" class="btn btn-info btn-sm">MATLAB <span class="glyphicon glyphicon-download-alt"></span></a>
+						<a href="{{url_for('captures.get_specific', uuid=key, fileformat='csv')}}" class="btn btn-primary btn-sm">CSV <span class="glyphicon glyphicon-download-alt"></span></a>
 					</div>
 				</div>
 				<div class="panel-footer text-center">

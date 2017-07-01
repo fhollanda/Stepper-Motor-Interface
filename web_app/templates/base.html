@@ -8,57 +8,27 @@
 </head>
 <body>
 	{% block navbar -%}
-	<nav class="navbar navbar-default">
-		<ul class="nav navbar-nav">
-			<li><a href="#">{{menu.HOME}}</a> </li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{menu.MOVE}}<b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="{{url_for('movement.move_1d')}}">{{menu.MOVE_1D}}</a></li>
-					<li><a href="{{url_for('movement.move_2d')}}">{{menu.MOVE_2D}}</a></li>
-					<li><a href="{{url_for('movement.move_3d')}}">{{menu.MOVE_3D}}</a></li>
-				</ul>
-			</li>
-			<li class="divider-vertical"></li>
-			<li><a href="{{url_for('captures.show')}}">{{menu.CAPTURES}}</a> </li>
-			<!-- <li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{menu.CONFIG}}<b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="{{url_for('caliper.caliper')}}">{{menu.CALIPER}}</a></li>
-				</ul>
-			</li> -->
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{menu.HELP}}<b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<!-- <li><a href="{{url_for('caliper.help')}}">{{menu.CALIPER}}</a></li> -->
-					<li><a href="{{url_for('movement.help')}}">{{menu.MOVE}}</a></li>
-				</ul>
-			</li>
-			<li><a href="{{url_for('copyright.show')}}">{{menu.COPYRIGHT}}</a> </li>
-		</ul>
-		<div class="text-right">
-			<input type="submit" onclick="location.href={{url_for('abort.send_abort_signal')}};" value="{{menu.ABORT}}" class="btn btn-danger navbar-btn">
-		</div>
-	</nav>
+	{% include 'menu.html' %}
 	{%- endblock navbar %}
 	{% block content %}
-	<div class="container">
-		{%- with messages = get_flashed_messages(with_categories=True) %}
-		{%- if messages %}
-		<div class="row">
-			{{utils.flashed_messages(messages)}}
+		<div class="container">
+			{%- with messages = get_flashed_messages(with_categories=True) %}
+			{%- if messages %}
+				<div class="row">
+					{{utils.flashed_messages(messages)}}
+				</div>
+			{%- endif %}
+			{%- endwith %}
+				<div class="page-header">
+					<h2>{{ self.title() }}</h2>
+				</div>
+			{% block submenu %}
+			{% endblock submenu %}
+			<div class="jumbotron">
+			{% block jumbotron %}{% endblock %}
+			</div>
 		</div>
-		{%- endif %}
-		{%- endwith %}
-		<div class="page-header">
-			<h2>{{ self.title() }}</h2>
-		</div>
-		{% block submenu %}
-		{% endblock submenu %}
-		<div class="jumbotron">
-	{%- endblock content%}
-		</div>
-	</div>
-		}
+		<div id="footer">teste</div>
+	{%- endblock content %}
 </body>
 </html>
