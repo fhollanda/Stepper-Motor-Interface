@@ -4,6 +4,7 @@
 *.db
 env/
 comm/
+captures/
 data_*
 build/
 develop-eggs/
