@@ -32,6 +32,8 @@ MENU = {
 
 FIELDS = {
 	#SCAN FIELDS
+	'SCAN_NAME': u'Nome da captura',
+	'SCAN_NAME_INFO': u"Se não for dado um nome a essa captura, ela será nomeada \"Unnamed\" e poderá ser identificada pelo seu uuid (identificador único)",
 	'SCAN_LEGEND': u'Dados da varredura a ser realizada',
 	'AXIS': u'Eixo primário',
 		'X': u'Eixo X',
@@ -40,6 +42,7 @@ FIELDS = {
 	'DIRECTION': u'Direção',
 		'FORWARD': u'Para frente',
 		'REVERSE': u'Para trás',
+	'DIRECTION_INFO': u"A direção é relativa a posição do equipamento",
 	'STEPS': u'Passos',
 	'ACQUISTION_RATE': u'Taxa de aquisição',
 	'ACQUISTION_RATE_INFO': u'Quantidade de passos necessários para realizar cada captura',
@@ -59,14 +62,18 @@ FIELDS = {
 	'AVERAGING': u'Quantidade de médias',
 	'V_SCALE': u'Escala de voltagem',
 	'T_SCALE': u'Escala de tempo',
-	'SET_CONFIG_BUTTON': u'Enviar configurações'
+	'SET_CONFIG_BUTTON': u'Enviar configurações',
+
+	#CAPTURES
+	'DATE_CREATED': u'Captura realizada em: ',
+	'REMOVE': u'Remover'
 }
 
 ERROR = {
 	'REQUEST_EXCEPTION': u"Ocorreu algum erro na conexão: {0}",
 	'EXCEPTION': u"Ocorreu um erro que a aplicação não pôde tratar normalmente. <br/> Existe a possibilidade de algum serviço estar fora do ar. <br/> Verifique os cabos de conexão, os logs das aplicações e tente novamente.<br/> HTTP Status: 500. <br/> <strong>Motivo do erro:</strong> <br/> {0}",
-	'SCAN_EXCEPTION': u"Ocorreu um erro durante a varredura. Tente novamente ou verifique os logs das demais aplicações para descobrir a causa. Status HTTP: {0}",
-	'SET_CONFIG_EXCEPTION': u"Ocorreu um erro na hora de enviar os parâmetros para o osciloscópio. Status HTTP: {0}",
+	'SCAN_EXCEPTION': u"Ocorreu um erro durante a varredura, verifique os logs das demais aplicações para descobrir a causa.",
+	'SET_CONFIG_EXCEPTION': u"Ocorreu um erro na hora de enviar os parâmetros para o osciloscópio.",
 	'REQUIRED_FIELD': u"Por favor, preencha o(s) campo(s) indicado(s):"
 }
 
@@ -74,5 +81,5 @@ FLASH = 		'flash'
 FLASH_ERROR = 	'error'
 RANDOM_ERROR = 	u"Apenas testando a box de erro"
 SET_CONFIG_OK = u"Configurações enviadas com sucesso para o osciloscópio"
-SCAN_OK = u"O arquivo já está disponível para ser baixado na aba de capturas salvas"
-ABORT_OK = u"Foi enviado o comando para abortar a operação e o status retornado foi <strong>{}</strong>, aperte o botão de retornar no navegador para recomeçar o procedimento"
+SCAN_OK = u"A captura \"{0}\" relativa ao arquivo <{1}> já está disponível na aba de capturas salvas"
+ABORT_OK = u"Foi enviado o comando para abortar a operação e o status retornado foi <strong>{0}</strong>, aperte o botão de retornar no navegador para recomeçar o procedimento"

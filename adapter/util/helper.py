@@ -1,12 +1,13 @@
 # encoding: utf-8
 
 ERROR = {
-	'REQUEST_EXCEPTION': u"Ocorreu um erro na conexão com o servidor. Tente novamente ou verifique o funcionamento do motor (err: x001)",
+	'REQUEST_EXCEPTION': u"Ocorreu um erro na conexão com o servidor, verifique os cabos ou o funcionamento dos equipamentos (err: x001)",
 	'MOTOR_EXCEPTION': u"Ocorreu um erro na conexão com o motor. (err: x002)",
-	'SCOPE_EXCEPTION': u"Ocorreu um erro na conexão com o osciloscopio. (err: x003)",
+	'SCOPE_EXCEPTION': u"Ocorreu um erro na conexão com o osciloscópio. (err: x003)",
 	'GENERIC_REQUEST_EXCEPTION': u"Há alguma falha no funcionamento do adaptador. Verifique os logs (err: x004)",
+	'CREATE_FILE_EXCEPTION': u"Por algum motivo o arquivo não pôde ser criado. Verifique os logs (err: x005)",
 	'GENERIC_HTTP_ERROR': u"Ocorreu um erro: {}",
-	'UNAVAILABLE_SERVICE': u"O serviço se encontra indisponível, tente novamente mais tarde (err: x503)",
+	'UNAVAILABLE_SERVICE': u"Algum dos serviços necessários se encontra indisponível, verifique os logs para descobrir a causa (err: x503)",
 	'NOT_FOUND': u"O recurso ou serviço procurado não foi encontrado (err: x404)",
 	'UNPROCESSABLE_ENTITY': u"Não foi possível processar essa requisição. Consulte o manual e refaça a operação (err: x422)"
 }
@@ -27,3 +28,5 @@ MOVE = {
 FIELDS = u"Houve um erro com os campos necessários para realizar essa requisição" 
 
 ABORT_FLAG = u"O programa foi abortado pelo usuário"
+
+DEFAULT_CAPTURE_NAME = u"Unnamed"

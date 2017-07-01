@@ -6,6 +6,7 @@ from blueprints.movement import movement_blueprint
 from blueprints.captures import captures_blueprint
 from blueprints.abort import abort_blueprint
 import util.helper as helper
+import time
 
 app = Flask("web_app")
 app.config.from_object('config')
@@ -21,6 +22,10 @@ app.register_blueprint(abort_blueprint)
 @app.errorhandler(Exception)
 def all_exception_handler(error):
    return helper.ERROR['EXCEPTION'].format(error), 500
+
+@app.template_filter('strftime')
+def _jinja2_filter_datetime(timestamp):
+    return time.asctime( time.localtime(timestamp) )
 
 @app.context_processor
 def inject_menu():

@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from flask import jsonify, abort
+from flask import abort
 from util.request_wrapper import post_data
 import util.endpoint as endpoint
 

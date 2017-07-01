@@ -1,9 +1,8 @@
-from flask import Blueprint, request, render_template, flash, g, Markup, send_file
+from flask import Blueprint, request, render_template, flash, g, Markup
 from forms import Move1DForm, Move2DForm, ScopeConfigForm
 import util.helper as helper
 import util.endpoint as endpoint
 import util.request_wrapper as requests
-import StringIO, uuid, json
 
 movement_blueprint = Blueprint('movement', __name__, url_prefix='/movement')
 
@@ -23,19 +22,23 @@ def move_1d():
 	scan_form = g.get("move1d_form")
 
 	if scan_form.move1d.data and scan_form.validate_on_submit():
+		if(scan_form.name.data):
+			scan_name = scan_form.name.data
+
 		data = { 
+			'name': scan_name,
 			'direction': scan_form.direction_radio.data, 
 			'steps':  scan_form.steps.data, 
-			'acquisition_rate': scan_form.acquisition_rate.data 
+			'acquisition_rate': scan_form.acquisition_rate.data
 		}
 
 		response = requests.post_data(endpoint.movement + "/{}".format(scan_form.axis_radio.data), data)
 
 		if(response):
-			flash(helper.SCAN_OK)
-			#return send_file(create_file(response), attachment_filename=create_name(), as_attachment=True)
+			flash(helper.SCAN_OK.format(scan_name or "", response.json()['filename']))
 		else:
-			flash(helper.ERROR['SCAN_EXCEPTION'].format(response.status_code), helper.FLASH_ERROR)
+			flash(helper.ERROR['SCAN_EXCEPTION'], helper.FLASH_ERROR)
+	
 	elif config_form.set_config.data and config_form.validate_on_submit():
 		data = wrap_configs(config_form)
 
@@ -44,7 +47,7 @@ def move_1d():
 		if(response):
 			flash(helper.SET_CONFIG_OK)
 		else:
-			flash(helper.ERROR['SET_CONFIG_EXCEPTION'].format(response.status_code), helper.FLASH_ERROR)
+			flash(helper.ERROR['SET_CONFIG_EXCEPTION'], helper.FLASH_ERROR)
 
 	return render_template("move1d.html", scan_form=scan_form, config_form=config_form)
 
@@ -54,7 +57,11 @@ def move_2d():
 	scan_form = g.get("move2d_form")
 
 	if scan_form.move2d.data and scan_form.validate_on_submit():
+		if(scan_form.name.data):
+			scan_name = scan_form.name.data
+
 		data = {
+			'name': scan_name,
 			'primary_axis': scan_form.axis_radio.data,
 			'direction': scan_form.direction_radio.data, 
 			'steps':  scan_form.steps.data, 
@@ -67,9 +74,9 @@ def move_2d():
 		response = requests.post_data(endpoint.movement, data)
 
 		if(response):
-			flash(helper.SCAN_OK)
+			flash(helper.SCAN_OK.format(scan_name, response.json()['filename']))
 		else:
-			flash(helper.ERROR['SCAN_EXCEPTION'].format(response.status_code), helper.FLASH_ERROR)
+			flash(helper.ERROR['SCAN_EXCEPTION'], helper.FLASH_ERROR)
 
 	elif config_form.set_config.data and config_form.validate_on_submit():
 		data = wrap_configs(config_form)
@@ -77,9 +84,9 @@ def move_2d():
 		response = requests.post_data(endpoint.set_scope_config, data)
 
 		if(response):
-			flash(helper.SET_CONFIG_OK)
+			flash(helper.SCAN_OK.format(response.json()['filename']))
 		else:
-			flash(helper.ERROR['SET_CONFIG_EXCEPTION'].format(response.status_code), helper.FLASH_ERROR)
+			flash(helper.ERROR['SET_CONFIG_EXCEPTION'], helper.FLASH_ERROR)
 
 	return render_template("move2d.html", scan_form=scan_form, config_form=config_form)
 
@@ -100,15 +107,3 @@ def wrap_configs(form):
 		'v_scale': float(form.v_scale.data),
 		't_scale': float(form.t_scale.data) 
 	}
-
-def create_file(response):
-	strIO = StringIO.StringIO()
-	returnable = json.dumps(response)
-	strIO.write(str(returnable))
-	strIO.seek(0)
-	return strIO
-
-def create_name():
-	random = uuid.uuid4()
-	random.fields[5]
-	return "data_" + str(random) + ".json"

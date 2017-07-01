@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, RadioField, DecimalField, SubmitField
+from wtforms import StringField, IntegerField, RadioField, DecimalField, SubmitField
 from wtforms.validators import DataRequired
 import util.helper as helper
 
@@ -18,6 +18,8 @@ class ScopeConfigForm(FlaskForm):
 	set_config = SubmitField(helper.FIELDS['SET_CONFIG_BUTTON'])
 
 class Move1DForm(FlaskForm):
+	name = StringField(helper.FIELDS['SCAN_NAME'])
+
 	steps = IntegerField('steps', 
 		validators=[DataRequired(helper.FIELDS['STEPS'].format())], default=100)
 
@@ -37,6 +39,8 @@ class Move1DForm(FlaskForm):
 	move1d = SubmitField(helper.FIELDS['SCAN_BUTTON'])
 
 class Move2DForm(FlaskForm):
+	name = StringField(helper.FIELDS['SCAN_NAME'])
+	
 	steps = IntegerField('steps', 
 		validators=[DataRequired(helper.FIELDS['STEPS'])], default=100)
 
