@@ -1,0 +1,35 @@
+<nav class="navbar navbar-default">
+	<ul class="nav navbar-nav">
+		<li><a href="#">{{menu.HOME}}</a> </li>
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{menu.MOVE}}<b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><a href="{{url_for('movement.move_1d')}}">{{menu.MOVE_1D}}</a></li>
+				<li><a href="{{url_for('movement.move_2d')}}">{{menu.MOVE_2D}}</a></li>
+				<li><a href="{{url_for('movement.move_3d')}}">{{menu.MOVE_3D}}</a></li>
+			</ul>
+		</li>
+		<li class="divider-vertical"></li>
+		<li><a href="{{url_for('captures.show')}}">{{menu.CAPTURES}}</a> </li>
+		<!-- <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{menu.CONFIG}}<b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><a href="{{url_for('caliper.caliper')}}">{{menu.CALIPER}}</a></li>
+			</ul>
+		</li> -->
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{menu.HELP}}<b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<!-- <li><a href="{{url_for('caliper.help')}}">{{menu.CALIPER}}</a></li> -->
+				<li><a href="{{url_for('movement.help')}}">{{menu.MOVE}}</a></li>
+			</ul>
+		</li>
+		<li><a href="{{url_for('copyright.show')}}">{{menu.COPYRIGHT}}</a> </li>
+	</ul>
+	<div class="text-right">
+		<a href="{{url_for('abort.send_abort_signal')}}" class="btn btn-danger navbar-btn">
+			<span class="glyphicon glyphicon-exclamation-sign"></span> 
+			{{menu.ABORT}}
+		</a>	
+	</div>
+</nav>
