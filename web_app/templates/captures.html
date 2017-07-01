@@ -2,24 +2,7 @@
 {% block title %}{{titles.CAPTURES}}{% endblock %}
 {% block styles %}
 {{super()}}
-<style>
-	.row {
-		position: relative;
-	}
-
-	.hover-btn {
-		position: absolute;
-		right: 15px;
-	}
-
-	.row:hover .hover-btn {
-		display: block;
-	}
-
-	h4 {
-		font-weight: bold;
-	}
-</style>
+	<link href="{{ url_for('static', filename='capture.css') }}" rel="stylesheet">
 {% endblock %}
 {% block jumbotron %}
 {{super()}}

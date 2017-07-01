@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{titles.MOVE}}{% endblock %}
+{% block styles %}
+{{super()}}
+	<link href="{{ url_for('static', filename='move.css') }}" rel="stylesheet">
+{% endblock %}
 {% block submenu %}
 	<ul class="nav nav-pills nav-justified">
 		<li><a href="{{url_for('movement.move_1d')}}">Varredura 1D</a></li>
