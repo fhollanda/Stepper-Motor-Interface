@@ -27,7 +27,8 @@ MOVE = {
 
 CAPTURES = {
 	'uuid': REQUIRED_FIELD.format(u"com o identificador único").encode('utf-8'),
-	'format': u"Esse formato não existe"
+	'format': u"Esse formato não existe",
+	'file': u"Não foi encontrado nenhum arquivo com essas características: uuid: {0} | format: {1}"
 }
 
 FORMATS = ["json", "matlab"]

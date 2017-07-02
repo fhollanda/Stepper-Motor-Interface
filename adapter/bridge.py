@@ -23,7 +23,7 @@ api.add_resource(Abort, '/adapter/api/abort')
 
 #CAPTURES
 api.add_resource(CapturesList, '/adapter/api/captures')
-api.add_resource(Capture, '/adapter/api/capture/<uuid>', '/adapter/api/capture/<uuid>/<fileformat>')
+api.add_resource(Capture, '/adapter/api/capture/<uuid>', '/adapter/api/capture/<uuid>/', '/adapter/api/capture/<uuid>/<fileformat>')
 
 #COPYRIGHT
 api.add_resource(Copyright, '/adapter/api/copyright')

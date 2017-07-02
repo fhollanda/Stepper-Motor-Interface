@@ -1,4 +1,4 @@
-import os, StringIO, uuid, json, logging
+import os, uuid, json, logging
 
 def create_path(directory):
 	current_path = os.path.dirname(os.path.abspath(__file__))
@@ -40,14 +40,7 @@ def delete(filepath):
 		os.remove(filepath)
 	except Exception as e:
 		raise
-
-def get_StringIO(data):
-	strIO = StringIO.StringIO()
-	returnable = json.dumps(data)
-	strIO.write(str(returnable))
-	strIO.seek(0)
-	return strIO
-
+		
 def create_uuid_filename(fields_quantity = 5):
 	random = uuid.uuid4()
 	random.fields[fields_quantity]

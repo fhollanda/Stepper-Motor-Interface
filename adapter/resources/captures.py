@@ -2,7 +2,9 @@ from flask import Flask
 from flask_restful import Resource, reqparse
 import dictionaries.capturesdb as db
 import util.helper as helper
-import json
+import util.filemanager as filemg
+import json, logging, ast, re, numpy
+import scipy.io as sio
 
 class CapturesList(Resource):
     def get(self):
@@ -17,13 +19,68 @@ class Capture(Resource):
 
 	def get(self, uuid, fileformat = "json"):
 		if fileformat in helper.FORMATS:
+			file = get_file(str(uuid))
+			if(file):
+				json_file = ast.literal_eval(json.loads(file))
 
-			return {'message': {'uuid': uuid, 'format': fileformat}}
+				if(json_file):
+					if(is_matlab(fileformat)):
+						try:
+							only_data = json_file['acquired_data']
+							only_array = get_only_values(only_data)
+							filepath = filemg.captures_path +'temp.mat'
+							sio.savemat(filepath, mdict={'acquired_data':only_array})
+
+							if(filemg.check(filepath)):
+								matlab_file = sio.loadmat(filepath)
+								return {'file': str(matlab_file)}
+						except Exception as e:
+							logging.error(e)
+					else:
+						return {'file': json_file}
+			else:
+				return {'message': helper.CAPTURES['file'].format(uuid, fileformat)}
 		return {'message': helper.CAPTURES['format']}
 
 	def delete(self, uuid):
-		is_deleted = db.delete_capture(str(uuid))
+		is_deleted = del_file_and_dict(str(uuid))
 		if(is_deleted):
 			return {"is_deleted": is_deleted}
 		else:
 			return {"is_deleted": False}
+
+def get_only_values(data_list):
+	returnable = []
+	for i in range(0, len(data_list)):
+		for key, value in data_list[i].items():
+			returnable.append(ast.literal_eval(value))
+
+	return returnable
+
+def del_file_and_dict(key):
+	try:
+		filepath = filemg.captures_path + key
+		file_exists = filemg.check(filepath) and db.has_key(key)
+
+		if file_exists:
+			filemg.delete(filepath)
+			db.delete_capture(key)
+			return True
+		else:
+			return False
+	except Exception as e:
+		logging.error(e)
+		return False
+
+def get_file(key):
+	try:
+		filepath = filemg.captures_path + key
+		file_exists = filemg.check(filepath) and db.has_key(key)
+
+		if file_exists:
+			return filemg.load(filepath)
+	except Exception as e:
+		logging.error(e)
+
+def is_matlab(string):
+	return string.lower() == "matlab"

@@ -1,6 +1,5 @@
 import shelve, logging, os
 from cPickle import HIGHEST_PROTOCOL
-import util.filemanager as filemg
 
 CAPTURES_DB = 'captures.db'
 
@@ -11,6 +10,12 @@ def open_db():
 
 db = open_db()
 
+def has_key(key):
+	try:
+		return db.has_key(key)
+	except Exception as e:
+		logging.error(e)
+
 def save_capture(key, data):
 	try:
 		db[key] = data
@@ -20,15 +25,7 @@ def save_capture(key, data):
 
 def delete_capture(key):
 	try:
-		filepath = filemg.captures_path + key
-		file_exists = filemg.check(filepath) and db.has_key(key)
-
-		if file_exists:
-			filemg.delete(filepath)
-			del db[key]
-			return True
-		else:
-			return False
+		del db[key]
 	except Exception as e:
 		logging.error(e)
 		return False
