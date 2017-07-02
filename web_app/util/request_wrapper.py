@@ -10,6 +10,14 @@ def get_message(endpoint):
 def get_captures(endpoint):
 	return get_element(endpoint, "captures")
 
+def delete_capture(endpoint):
+	try:
+		response = requests.request("DELETE", endpoint)
+		if(response.json()["is_deleted"]):
+			return response.json()["is_deleted"]
+	except requests.exceptions.RequestException as e:
+		return helper.ERROR['REQUEST_EXCEPTION'].format(str(e))
+
 def get_element(endpoint, element):
 	try:
 		response = requests.request("GET", endpoint)

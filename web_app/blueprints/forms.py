@@ -21,7 +21,7 @@ class Move1DForm(FlaskForm):
 	name = StringField(helper.FIELDS['SCAN_NAME'])
 
 	steps = IntegerField('steps', 
-		validators=[DataRequired(helper.FIELDS['STEPS'].format())], default=100)
+		validators=[DataRequired(helper.FIELDS['STEPS'])], default=100)
 
 	acquisition_rate = IntegerField('acquisition_rate', 
 		validators=[DataRequired(helper.FIELDS['ACQUISTION_RATE'])], default=10)

@@ -22,6 +22,7 @@ def move_1d():
 	scan_form = g.get("move1d_form")
 
 	if scan_form.move1d.data and scan_form.validate_on_submit():
+		scan_name = "Unnamed"
 		if(scan_form.name.data):
 			scan_name = scan_form.name.data
 
@@ -35,7 +36,7 @@ def move_1d():
 		response = requests.post_data(endpoint.movement + "/{}".format(scan_form.axis_radio.data), data)
 
 		if(response):
-			flash(helper.SCAN_OK.format(scan_name or "", response.json()['filename']))
+			flash(helper.SCAN_OK.format(scan_name, response.json()['filename']))
 		else:
 			flash(helper.ERROR['SCAN_EXCEPTION'], helper.FLASH_ERROR)
 	
@@ -57,6 +58,7 @@ def move_2d():
 	scan_form = g.get("move2d_form")
 
 	if scan_form.move2d.data and scan_form.validate_on_submit():
+		scan_name = "Unnamed"
 		if(scan_form.name.data):
 			scan_name = scan_form.name.data
 

@@ -2,7 +2,7 @@ from flask import Flask, request, abort
 from flask_restful import Api
 from flask_cors import CORS
 from resources.abort import Abort
-from resources.captures import CapturesList
+from resources.captures import Capture, CapturesList
 from resources.copyright import Copyright
 from resources.movement import SingleAxisMove, DoubleAxisMove
 from resources.scope import SetScopeConfig
@@ -23,6 +23,7 @@ api.add_resource(Abort, '/adapter/api/abort')
 
 #CAPTURES
 api.add_resource(CapturesList, '/adapter/api/captures')
+api.add_resource(Capture, '/adapter/api/capture/<uuid>', '/adapter/api/capture/<uuid>/<fileformat>')
 
 #COPYRIGHT
 api.add_resource(Copyright, '/adapter/api/copyright')

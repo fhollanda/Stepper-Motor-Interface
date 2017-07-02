@@ -25,6 +25,13 @@ MOVE = {
 	'secondary_axis_step_size': REQUIRED_FIELD.format(u"com o tamanho do deslocamento").encode('utf-8')
 }
 
+CAPTURES = {
+	'uuid': REQUIRED_FIELD.format(u"com o identificador único").encode('utf-8'),
+	'format': u"Esse formato não existe"
+}
+
+FORMATS = ["json", "matlab"]
+
 FIELDS = u"Houve um erro com os campos necessários para realizar essa requisição" 
 
 ABORT_FLAG = u"O programa foi abortado pelo usuário"

@@ -131,7 +131,7 @@ class DoubleAxisMove(Resource):
 					abort(500, message=helper.ERROR['MOTOR_EXCEPTION'])
 
 		settings.end_run()
-		
+	
 		try:
 			filename = filemg.create_uuid_filename()
 			filemg.save(str({'acquired_data': response_list}), filemg.captures_path + filename)

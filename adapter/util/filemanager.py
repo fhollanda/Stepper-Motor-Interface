@@ -28,14 +28,15 @@ def load(filepath):
 
 def check(filepath):
 	try:
-		logging.warning("check if file/dir exists: {}".format(filepath))
-		return os.path.exists(filepath)
+		file_exists = os.path.exists(filepath)
+		logging.warning("check if file/dir exists: {0}...{1}".format(filepath, file_exists))
+		return file_exists
 	except Exception as e:
 		raise
 
 def delete(filepath):
 	try:
-		logging.warning("delete file {}".format(filepath))
+		logging.warning("delete file: {}".format(filepath))
 		os.remove(filepath)
 	except Exception as e:
 		raise

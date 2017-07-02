@@ -1,6 +1,6 @@
-import shelve, logging
-import os
+import shelve, logging, os
 from cPickle import HIGHEST_PROTOCOL
+import util.filemanager as filemg
 
 CAPTURES_DB = 'captures.db'
 
@@ -17,6 +17,21 @@ def save_capture(key, data):
 		logging.warning("store capture with " + str(data))
 	except Exception as e:
 		logging.error(e)
+
+def delete_capture(key):
+	try:
+		filepath = filemg.captures_path + key
+		file_exists = filemg.check(filepath) and db.has_key(key)
+
+		if file_exists:
+			filemg.delete(filepath)
+			del db[key]
+			return True
+		else:
+			return False
+	except Exception as e:
+		logging.error(e)
+		return False
 
 def get_all_captures():
 	try:
