@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
+from random import randint
 
 app = Flask("driver_mock")
 CORS(app)
@@ -17,7 +18,7 @@ class CaptureWaveform(Resource):
 		super(CaptureWaveform, self).__init__()
 
 	def get(self, id = None):
-		return {'data': "[[0, 1], [2, 3]]"}, 200
+		return {'data': "[[{0}, {1}], [{2}, {3}]]".format(randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9))}, 200
 
 class ConfigureScopeParams(Resource):
 	def __init__(self):
