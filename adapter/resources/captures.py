@@ -51,11 +51,25 @@ class Capture(Resource):
 
 def get_only_values(data_list):
 	returnable = []
-	for i in range(0, len(data_list)):
-		for key, value in data_list[i].items():
-			returnable.append(ast.literal_eval(value))
+
+	if(has_items(data_list)):
+		for i in range(0, len(data_list)):
+			for key, value in data_list[i].items():
+				returnable.append(ast.literal_eval(value))
+	else:
+		for i in range(0, len(data_list)):
+			returnable.append([])
+			for j in range(0, len(data_list[i])):
+				for key, value in data_list[i][j].items():
+					returnable[i].append(ast.literal_eval(value))
 
 	return returnable
+
+def has_items(data):
+	try:
+		return data[0].items() 
+	except Exception as e:
+		return False
 
 def del_file_and_dict(key):
 	try:
