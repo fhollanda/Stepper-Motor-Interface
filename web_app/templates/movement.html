@@ -14,6 +14,8 @@
 {% block jumbotron %}
 {{super()}}
 	{% block subcontent %}
-	Escolha uma das opções para continuar
+	<div class="container">
+		<p class="text-center">{{ fields.MOVEMENT_CHOICES }}</p>
+	</div>
 	{% endblock subcontent %}
 {% endblock %}

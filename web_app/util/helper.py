@@ -31,6 +31,8 @@ MENU = {
 }
 
 FIELDS = {
+	'MOVEMENT_CHOICES': u'Escolha uma das opções no menu acima para continuar',
+
 	#SCAN FIELDS
 	'SCAN_NAME': u'Nome da captura',
 	'SCAN_NAME_INFO': u"Se não for dado um nome a essa captura, ela será nomeada \"Unnamed\" e poderá ser identificada pelo seu uuid (identificador único)",
