@@ -1,4 +1,4 @@
-from flask import Flask, make_response, send_file, send_from_directory
+from flask import Flask, make_response, send_from_directory
 from flask_restful import Resource, reqparse
 import dictionaries.capturesdb as db
 import util.helper as helper
