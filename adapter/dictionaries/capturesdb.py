@@ -14,20 +14,20 @@ def has_key(key):
 	try:
 		return db.has_key(key)
 	except Exception as e:
-		logging.error(e)
+		logging.exception(e)
 
 def save_capture(key, data):
 	try:
 		db[key] = data
 		logging.warning("store capture with " + str(data))
 	except Exception as e:
-		logging.error(e)
+		logging.exception(e)
 
 def delete_capture(key):
 	try:
 		del db[key]
 	except Exception as e:
-		logging.error(e)
+		logging.exception(e)
 		return False
 
 def get_all_captures():
@@ -41,4 +41,4 @@ def get_all_captures():
 
 		return dbdict
 	except Exception as e:
-		logging.error(e)
+		logging.exception(e)

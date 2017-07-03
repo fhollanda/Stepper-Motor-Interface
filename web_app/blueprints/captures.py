@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, flash, send_file
 import util.helper as helper
 import util.endpoint as endpoint
 import util.request_wrapper as requests 
-import logging, json, StringIO
+import logging, json, StringIO, io
 
 captures_blueprint = Blueprint('captures', __name__, url_prefix='/captures')
 
@@ -12,12 +12,12 @@ def show():
 
 @captures_blueprint.route("/<uuid>/<fileformat>")
 def get_specific(uuid, fileformat):
-	response = requests.get_file(endpoint.capture.format(uuid, fileformat))
-	file = response['file']
-
 	if(is_matlab(fileformat)):
-		return send_file(get_file_as_stream(file), attachment_filename=uuid+".mat", as_attachment=True)
+		response = requests.get_matlab_file(endpoint.capture.format(uuid, fileformat))
+		return send_file(io.BytesIO(response), attachment_filename=uuid+".mat", as_attachment=True, mimetype='application/octet-stream')
 	else:
+		response = requests.get_json_file(endpoint.capture.format(uuid, fileformat))
+		file = response['file']
 		json_file = json.dumps(file, ensure_ascii=False)
 		return send_file(get_file_as_stream(json_file), attachment_filename=uuid+".json", as_attachment=True)
 

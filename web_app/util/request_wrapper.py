@@ -26,12 +26,26 @@ def get_element(endpoint, element):
 	except requests.exceptions.RequestException as e:
 		raise
 
-def get_file(endpoint):
+def get_json_file(endpoint):
 	try:
 		response = requests.request("GET", endpoint)
 		if(response.json()):
 			return response.json()
 	except requests.exceptions.RequestException as e:
+		raise
+
+def get_matlab_file(endpoint):
+	try:
+		response = requests.request("GET", endpoint)
+		if(response):
+			return response.content
+		else:
+			response.raise_for_status()
+	except requests.exceptions.HTTPError as e:
+		logging.exception(e)
+		raise
+	except requests.exceptions.RequestException as e:
+		logging.exception(e)
 		raise
 
 def post_data(endpoint, payload = None):
@@ -45,7 +59,7 @@ def post_data(endpoint, payload = None):
 		logging.error(e)
 		if(response.json()['message']):
 			cause = response.json()['message']
-			logging.error("last error cause: " + cause)
+			logging.exception("last error cause: " + cause)
 			flash(unicode(cause), helper.FLASH_ERROR)
 		else:
 			raise

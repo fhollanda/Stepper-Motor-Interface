@@ -30,13 +30,13 @@ def wrap_request(method, endpoint, **kwargs):
 		else:
 			response.raise_for_status()
 	except requests.exceptions.HTTPError as e:
-		logging.error(e)
+		logging.exception(e)
 		return error_response(e.response.status_code, response)
 	except requests.exceptions.RequestException as re:
-		logging.error(re)
+		logging.exception(re)
 		abort(500, message=helper.ERROR['REQUEST_EXCEPTION'])
 	except Exception as ex:
-		logging.error(ex)
+		logging.exception(ex)
 		abort(500, message=helper.ERROR['GENERIC_REQUEST_EXCEPTION'])
 
 	'''

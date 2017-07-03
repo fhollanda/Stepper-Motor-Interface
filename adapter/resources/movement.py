@@ -30,7 +30,7 @@ class SingleAxisMove(Resource):
 				direction = args['direction']
 				full_path = args['steps']
 			except Exception as e:
-				logging.error(e)
+				logging.exception(e)
 				abort(500, cause=helper.FIELDS(), error=str(e))
 
 			response_list = []
@@ -58,7 +58,7 @@ class SingleAxisMove(Resource):
 				db.save_capture(filename, [unicode(name) or helper.DEFAULT_CAPTURE_NAME, time.time()])
 				return {'filename': filename}, 200
 			except Exception as e:
-				logging.error(e)
+				logging.exception(e)
 				abort(500, message=helper.ERROR['CREATE_FILE_EXCEPTION'])
 		else:
 			abort(400, helper.MOVE['primary_axis'])
@@ -92,7 +92,7 @@ class DoubleAxisMove(Resource):
 			acquisition_offset = args['acquisition_offset_rate']
 			secondary_axis_step_size = args['secondary_axis_step_size']
 		except Exception as e:
-			logging.error(e)
+			logging.exception(e)
 			abort(500, cause=helper.FIELDS(), error=str(e))
 
 		response_list = []

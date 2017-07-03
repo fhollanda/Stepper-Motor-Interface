@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, make_response, send_file, send_from_directory
 from flask_restful import Resource, reqparse
 import dictionaries.capturesdb as db
 import util.helper as helper
@@ -32,10 +32,11 @@ class Capture(Resource):
 							sio.savemat(filepath, mdict={'acquired_data':only_array})
 
 							if(filemg.check(filepath)):
-								matlab_file = sio.loadmat(filepath)
-								return {'file': str(matlab_file)}
+								response = make_response(send_from_directory(filemg.captures_path, 'temp.mat'))
+								response.headers['Content-Type'] = 'application/octet-stream'
+								return response
 						except Exception as e:
-							logging.error(e)
+							logging.exception(e)
 					else:
 						return {'file': json_file}
 			else:
@@ -75,7 +76,6 @@ def del_file_and_dict(key):
 	try:
 		filepath = filemg.captures_path + key
 		file_exists = filemg.check(filepath) and db.has_key(key)
-
 		if file_exists:
 			filemg.delete(filepath)
 			db.delete_capture(key)
@@ -83,18 +83,17 @@ def del_file_and_dict(key):
 		else:
 			return False
 	except Exception as e:
-		logging.error(e)
+		logging.exception(e)
 		return False
 
 def get_file(key):
 	try:
 		filepath = filemg.captures_path + key
 		file_exists = filemg.check(filepath) and db.has_key(key)
-
 		if file_exists:
 			return filemg.load(filepath)
 	except Exception as e:
-		logging.error(e)
+		logging.exception(e)
 
 def is_matlab(string):
 	return string.lower() == "matlab"
