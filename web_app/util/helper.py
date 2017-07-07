@@ -59,11 +59,11 @@ FIELDS = {
 	'CONFIG_SCOPE_LEGEND': u'Configurações do osciloscópio',
 	'CONFIG_INFO': u'Se nenhum dos campos for modificado, o local de captura no ecrã do osciloscópio permanecerá sem alterações ao se realizar uma varredura',
 	'CHANNEL': u'Canal para aquisição',
-	'FREQUENCY': u'Frequência',
+	'FREQUENCY': u'Frequência (MHz)',
 	'CYCLES': u'Quantidade de ciclos',
 	'AVERAGING': u'Quantidade de médias',
-	'V_SCALE': u'Escala de voltagem',
-	'T_SCALE': u'Escala de tempo',
+	'V_SCALE': u'Escala de voltagem (V)',
+	'T_SCALE': u'Escala de tempo (s)',
 	'SET_CONFIG_BUTTON': u'Enviar configurações',
 
 	#CAPTURES
