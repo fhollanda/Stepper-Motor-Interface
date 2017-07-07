@@ -26,9 +26,9 @@ class CaptureWaveform(Resource):
 
 	def get(self):
 		try:
-			data = selected_channel.get_waveform()
+			data = channel_to_acquire.get_waveform()
 		except Exception as e:
-			abort(500, cause=str(e), error=("Couldn't acquire data"))
+			abort(500, cause=str(e), error=("Couldn't acquire data from {}".format(channel_to_acquire)))
 
 		if(DEFAULT_SAVE_DATA):
 			save_data_file(data)
@@ -105,8 +105,6 @@ def definition():
 	DEFAULT_SAVE_DATA = False
 	DEFAULT_ENCODING = 'RPBinary'
 
-	channel_to_acquire = DEFAULT_CHANNEL
-
 	try: 
 		scope = tds2024Cusb.tek2024('/dev/usbtmc0')
 	except Exception as e:
@@ -116,6 +114,8 @@ def definition():
 	channel2 = tds2024Cusb.channel(scope, 2)
 	channel3 = tds2024Cusb.channel(scope, 3)
 	channel4 = tds2024Cusb.channel(scope, 4)
+
+	channel_to_acquire = get_channel_by_number(DEFAULT_CHANNEL)
 
 def get_channel_by_number(channel_number):
 	return {
