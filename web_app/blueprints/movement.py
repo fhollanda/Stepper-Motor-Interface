@@ -86,7 +86,7 @@ def move_2d():
 		response = requests.post_data(endpoint.set_scope_config, data)
 
 		if(response):
-			flash(helper.SCAN_OK.format(response.json()['filename']))
+			flash(helper.SET_CONFIG_OK)
 		else:
 			flash(helper.ERROR['SET_CONFIG_EXCEPTION'], helper.FLASH_ERROR)
 
