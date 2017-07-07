@@ -83,6 +83,6 @@ FLASH = 		'flash'
 FLASH_ERROR = 	'error'
 RANDOM_ERROR = 	u"Apenas testando a box de erro"
 SET_CONFIG_OK = u"Configurações enviadas com sucesso para o osciloscópio"
-SCAN_OK = u"A captura \"{0}\" relativa ao arquivo <{1}> já está disponível na aba de capturas salvas"
+SCAN_OK = u"A captura \"{0}\" relativa ao arquivo <{1}> já está disponível no menu, em \"Capturas Salvas\""
 ABORT_OK = u"Foi enviado o comando para abortar a operação e o status retornado foi <strong>{0}</strong>, aperte o botão de retornar no navegador para recomeçar o procedimento"
 DELETE_CAPTURE_OK = u"Arquivo com identificador único <{}> apagado"
