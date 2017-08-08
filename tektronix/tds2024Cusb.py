@@ -1,5 +1,4 @@
 import os, sys, time, serial
-import matplotlib.pyplot as plot
 import numpy as np
 from struct import unpack
 import copy
