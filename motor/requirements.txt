@@ -2,4 +2,3 @@ flask
 flask_cors
 flask-restful
 pyserial
-numpy
