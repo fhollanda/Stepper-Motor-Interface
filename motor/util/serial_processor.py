@@ -49,14 +49,13 @@ def send_to_c4(writable, delay):
 		C4SerialProcessor().write_serial(writable, delay)
 		serial_line = C4SerialProcessor().read_serial()
 		#C4SerialProcessor().close_serial()
+		return serial_line or "a"
 	except serial.SerialException as se:
 		log_and_abort(503, writable, se)
 	except serial.SerialTimeoutException as ste:
 		log_and_abort(504, writable, ste)
 	except Exception as e:
 		log_and_abort(500, writable, e)
-
-	return serial_line or "a"
 
 def log_and_abort(status, data, exception):
 	logging.exception("error: " + str(exception))

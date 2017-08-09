@@ -2,7 +2,7 @@ import tds2024Cusb
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse, abort
 from flask_cors import CORS
-import time
+import time, logging
 
 app = Flask("driver")
 CORS(app)
@@ -28,6 +28,7 @@ class CaptureWaveform(Resource):
 		try:
 			data = channel_to_acquire.get_waveform()
 		except Exception as e:
+			logging.exception(e)
 			abort(500, cause=str(e), error=("Couldn't acquire data from {}".format(channel_to_acquire)))
 
 		if(DEFAULT_SAVE_DATA):
@@ -70,6 +71,7 @@ class ConfigureScopeParams(Resource):
 			selected_channel.set_tScale((t_scale or DEFAULT_T_SCALE))
 			selected_channel.set_waveformParams(DEFAULT_ENCODING)			
 		except Exception as e:
+			logging.exception(e)
 			abort(500, cause=str(e), error=("Couldn't send config data"))                  		
 
 		return {'data': "OK"}, 200
@@ -108,22 +110,26 @@ def definition():
 	try: 
 		scope = tds2024Cusb.tek2024('/dev/usbtmc0')
 	except Exception as e:
+		logging.exception(e)
 		abort(503, message=str(e))
 
-	channel1 = tds2024Cusb.channel(scope, 1)
-	channel2 = tds2024Cusb.channel(scope, 2)
-	channel3 = tds2024Cusb.channel(scope, 3)
-	channel4 = tds2024Cusb.channel(scope, 4)
+	try:
+		channel1 = tds2024Cusb.channel(scope, 1)
+		channel2 = tds2024Cusb.channel(scope, 2)
+		channel3 = tds2024Cusb.channel(scope, 3)
+		channel4 = tds2024Cusb.channel(scope, 4)
+	except Exception as e:
+		logging.exception(e)
 
 	channel_to_acquire = get_channel_by_number(DEFAULT_CHANNEL)
 
 def get_channel_by_number(channel_number):
 	return {
-        1: channel1,
-        2: channel2,
-        3: channel3,
-        4: channel4,
-    }.get(channel_number, channel1) 
+		1: channel1,
+		2: channel2,
+		3: channel3,
+		4: channel4,
+	}.get(channel_number, channel1) 
 
 if __name__ == '__main__':
 	definition()
