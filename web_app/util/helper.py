@@ -49,7 +49,7 @@ FIELDS = {
 	'ACQUISTION_RATE': u'Distância entre os pontos',
 	'ACQUISTION_RATE_INFO': u'Quantidade de passos necessários para realizar cada captura (taxa de aquisição)',
 	'SECONDARY_AXIS': u'Eixo secundário',
-	'TOTAL_STEPS_SECONDARY': u'Quant. total de passos deslocamento',
+	'TOTAL_STEPS_SECONDARY': u'Quant. total de passos no deslocamento',
 	'TOTAL_STEPS_SECONDARY_INFO': u'Tamanho total do deslocamento no eixo secundário',
 	'SIZE_STEPS_SECONDARY': u'Quant. passos por deslocamento',
 	'SIZE_STEPS_SECONDARY_INFO': u'Tamanho do deslocamento no eixo secundário a cada iteração',
