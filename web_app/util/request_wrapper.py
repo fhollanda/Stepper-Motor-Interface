@@ -4,8 +4,8 @@ import json
 import util.helper as helper
 from flask import flash
 
-def get_message(endpoint):
-	return get_element(endpoint, "message")
+def get_response(endpoint):
+	return get_element(endpoint, "response")
 
 def get_captures(endpoint):
 	return get_element(endpoint, "captures")
