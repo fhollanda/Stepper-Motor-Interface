@@ -3,6 +3,49 @@ import numpy as np
 from struct import unpack
 import copy
 
+class usbtmc_logical:
+	""" 
+	Driverless usbtmc, using only python packages
+	See more: 
+	- https://github.com/python-ivi/python-usbtmc
+	- http://scruss.com/blog/2013/12/15/my-raspberry-pi-talks-to-my-oscilloscope/
+
+	Only works if the file below exists:
+	------------------------------------
+	# /etc/udev/rules.d/usbtmc.rules
+
+	# USBTMC instruments
+	# Device 008: ID 0699:036a Tektronix, Inc. 
+	SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="0699", ATTRS{idProduct}=="036a", GROUP="usbtmc", MODE="0660"
+	------------------------------------
+	"""
+
+	def __init__(self, debug=False):
+		self.debug = debug
+		try:
+			import usbtmc as python_usbtmc
+			self.inst = python_usbtmc.Instrument(1689, 874) # Works only for Tektronix-TDS2024B
+		except Exception as e:
+			error = "ERROR: Can't create logical usbtmc"
+			print(error)
+			raise Exception(error)
+
+	def write(self, command):
+		self.inst.write(command)
+
+	def read(self, length=0):
+		return self.inst.read_raw()
+
+	def ask(self, command):
+		return self.inst.ask(command)
+
+	def getName(self):
+		return self.inst.ask("*IDN?")
+
+	def sendReset(self):
+		print "Resetting machine"
+		self.inst.ask("*RST")
+
 class usbtmc:
 	
 	prevCommand = ''
@@ -132,7 +175,17 @@ class tek2024:
 	available_averageSettings = [128, 64, 16, 4]
 
 	def __init__(self, device, debug=False):
-		self.inst = usbtmc(device, debug)
+		try: 
+			self.inst = usbtmc(device, debug)
+		except Exception as err1:
+			error = "Caused by: " + str(err1)
+			print(error)
+
+			try:
+				self.inst = usbtmc_logical(debug)
+			except Exception as err2:
+				raise err2
+
 		self.name = self.inst.getName()
 		self.debug = debug
 		print "Connected to: " + self.name.rstrip('\n')

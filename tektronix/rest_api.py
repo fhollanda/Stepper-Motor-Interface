@@ -111,7 +111,7 @@ def definition():
 		scope = tds2024Cusb.tek2024('/dev/usbtmc0')
 	except Exception as e:
 		logging.exception(e)
-		abort(503, message=str(e))
+		raise
 
 	try:
 		channel1 = tds2024Cusb.channel(scope, 1)
@@ -133,12 +133,5 @@ def get_channel_by_number(channel_number):
 
 if __name__ == '__main__':
 	definition()
-
-	scope.set_hScale(frequency=DEFAULT_FREQUENCY, cycles=DEFAULT_CYCLES)    	
-	scope.set_averaging(DEFAULT_AVERAGING)
-
-	channel_to_acquire.set_vScale(DEFAULT_V_SCALE)                      		
-	channel_to_acquire.set_tScale(DEFAULT_T_SCALE)
 	channel_to_acquire.set_waveformParams(DEFAULT_ENCODING)
-
 	app.run(debug=True, port=5003)
