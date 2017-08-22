@@ -1,0 +1,6 @@
+# 
+# /etc/udev/rules.d/usbtmc.rules
+
+# USBTMC instruments
+# Device 008: ID 0699:036a Tektronix, Inc. 
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="0699", ATTRS{idProduct}=="036a", GROUP="usbtmc", MODE="0660"
