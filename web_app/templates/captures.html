@@ -15,10 +15,8 @@
 								<h4>{{ values[0] }}</h4>
 							</div>
 							<div class="hover-btn">
-								<a href="{{url_for('captures.delete', uuid=key)}}" class="btn btn-default btn-sm">
-									<span class="glyphicon glyphicon-remove"></span>
-									{{ fields.REMOVE }}	
-								</a>		
+								{% include 'remove_modal.html' %}
+								<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#removeModal"><span class="glyphicon glyphicon-remove"></span>{{ fields.REMOVE }}</button>
 							</div>
 						</div>
 					<div>

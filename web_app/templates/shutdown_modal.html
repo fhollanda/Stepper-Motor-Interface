@@ -1,0 +1,16 @@
+<div class="modal fade" id="shutdownModal" role="dialog">
+										<div class="modal-dialog modal-sm">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-body">
+													<p class="shutdown">{{ fields.SHUTDOWN_CONFIRMATION }}</p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">{{ fields.CLOSE }}</button>
+													<a href="{{url_for('shutdown')}}" class="btn btn-primary">{{ fields.YES }}</a>	
+												</div>
+											</div>
+										</div>
+									</div>

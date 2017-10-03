@@ -40,3 +40,10 @@ body > .container {
 	 max-width: 100px; 
 	 margin-top: -24px;
 }
+
+p.shutdown {
+	text-align: center;
+    margin-bottom: 15px;
+    font-size: 21px;
+    font-weight: 200;
+}

@@ -9,12 +9,12 @@ class CaliperForm(FlaskForm):
 	final_position = IntegerField('final_position')
 
 class ScopeConfigForm(FlaskForm):
-	channel = IntegerField('channel', default=1)
-	frequency = IntegerField('frequency', default=1000000)
-	cycles = IntegerField('cycles', default=1)
-	averaging = IntegerField('averaging', default=64)
-	v_scale = DecimalField('v_scale', default=0.02)
-	t_scale = DecimalField('t_scale', default=0.0000025, places=7)
+	channel = IntegerField('channel')
+	frequency = IntegerField('frequency')
+	cycles = IntegerField('cycles')
+	averaging = IntegerField('averaging')
+	v_scale = DecimalField('v_scale')
+	t_scale = DecimalField('t_scale')
 	set_config = SubmitField(helper.FIELDS['SET_CONFIG_BUTTON'])
 
 class Move1DForm(FlaskForm):

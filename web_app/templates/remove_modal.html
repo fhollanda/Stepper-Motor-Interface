@@ -1,0 +1,16 @@
+<div class="modal fade" id="removeModal" role="dialog">
+										<div class="modal-dialog modal-sm">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-body">
+													<p>{{ fields.REMOVE_CONFIRMATION }}</p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">{{ fields.CLOSE }}</button>
+													<a href="{{url_for('captures.delete', uuid=key)}}" class="btn btn-primary">{{ fields.REMOVE }}</a>	
+												</div>
+											</div>
+										</div>
+									</div>

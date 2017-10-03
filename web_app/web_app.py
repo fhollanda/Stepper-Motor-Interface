@@ -1,5 +1,5 @@
 #!web_app/env/bin/python
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from blueprints.caliper import caliper_blueprint
 from blueprints.copyright import copyright_blueprint
@@ -36,6 +36,17 @@ def inject_menu():
 @app.route('/')
 def index():
 	return render_template('movement.html')
+
+def shutdown_server():
+	func = request.environ.get('werkzeug.server.shutdown')
+	if func is None:
+		raise RuntimeError('Not running with the Werkzeug Server')
+	func()
+
+@app.route('/shutdown', methods=['GET'])
+def shutdown():
+	shutdown_server()
+	return 'Server shutting down...'
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5002, threaded=True),

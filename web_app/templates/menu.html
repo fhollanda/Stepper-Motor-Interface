@@ -43,7 +43,9 @@
 					<span class="glyphicon glyphicon-exclamation-sign"></span> 
 					{{menu.ABORT}}
 				</a>
+				<button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#shutdownModal"><img src="{{url_for('static', filename='shutdown.png')}}" width="19px" height="19px" /></button>
 			</div>	
 		</div>
 	</div>
 </nav>
+				{% include 'shutdown_modal.html' %}

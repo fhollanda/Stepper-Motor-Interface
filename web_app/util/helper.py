@@ -57,7 +57,7 @@ FIELDS = {
 
 	#SCOPE CONFIG FIELDS
 	'CONFIG_SCOPE_LEGEND': u'Configurações do osciloscópio',
-	'CONFIG_INFO': u'Se nenhum dos campos for modificado, o local de captura no ecrã do osciloscópio permanecerá sem alterações ao se realizar uma varredura',
+	'CONFIG_INFO': u'USO OPCIONAL, PREENCHA TODOS OS CAMPOS - Se nenhum dos campos for modificado, o local de captura no ecrã do osciloscópio permanecerá sem alterações ao se realizar uma varredura',
 	'CHANNEL': u'Canal para aquisição',
 	'FREQUENCY': u'Frequência (MHz)',
 	'CYCLES': u'Quantidade de ciclos',
@@ -68,7 +68,13 @@ FIELDS = {
 
 	#CAPTURES
 	'DATE_CREATED': u'Captura realizada em: ',
-	'REMOVE': u'Remover'
+	'REMOVE': u'Remover',
+
+	#MODAL
+	'REMOVE_CONFIRMATION': u'Tem certeza que deseja remover essa captura?',
+	'SHUTDOWN_CONFIRMATION': u'Tem certeza que deseja desligar o adaptador?',
+	'YES': 'Sim',
+	'CLOSE': u'Cancelar'
 }
 
 ERROR = {
