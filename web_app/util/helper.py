@@ -14,7 +14,7 @@ TITLE = {
 HELP = {
 	'CALIPER':	u"Aqui deveria ficar o texto explicando como deve funcionar a calibragem",
 	'CAPTURES': u"Aqui deveria ficar o texto explicando como deve funcionar a tela com as capturas salvas",
-	'MOVE':	u"Aqui deveria ficar o texto explicando como deve funcionar a varredura, com divisão para 1, 2 ou 3 eixos"
+	'MOVE':	u"Para realizar a varredura, vá até o menu \"VARREDURA\", selecione a quantidade de eixos e, ao entrar na tela do formulário, preencha os campos de acordo com a execução desejada. <br>O \"Nome da captura\" corresponde ao nome que posteriormente será usado para identificar esses dados dentro de \"CAPTURAS SALVAS\", acessível no menu. Observe também os comentários de cada campo, caso esteja com dúvida sobre a sua utilidade no formulário. <br> As configurações do osciloscópio são opcionais, podendo ser ignorado caso todo o controle seja feito diretamente no equipamento."
 }
 
 MENU = {
@@ -80,6 +80,7 @@ FIELDS = {
 ERROR = {
 	'EXCEPTION': u"Ocorreu um erro que a aplicação não pôde tratar normalmente. <br/> Existe a possibilidade de algum serviço estar fora do ar. <br/> Verifique os cabos de conexão, os logs das aplicações e tente novamente<br/> HTTP Status: 500. <br/> <strong>Motivo do erro:</strong> <br/> {0}",
 	'SCAN_EXCEPTION': u"Ocorreu um erro durante a varredura, verifique os logs das demais aplicações para descobrir a causa",
+	'SAME_AXIS': u"Você precisa selecionar um eixo diferente para o \"Eixo Secundário\"",
 	'SET_CONFIG_EXCEPTION': u"Ocorreu um erro na hora de enviar os parâmetros para o osciloscópio",
 	'DELETE_CAPTURE_EXCEPTION': u"Ocorreu um erro ao deletar o arquivo <{}>",
 	'REQUIRED_FIELD': u"Por favor, preencha o(s) campo(s) indicado(s):"

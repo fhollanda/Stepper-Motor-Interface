@@ -62,23 +62,26 @@ def move_2d():
 		if(scan_form.name.data):
 			scan_name = scan_form.name.data
 
-		data = {
-			'name': scan_name,
-			'primary_axis': scan_form.axis_radio.data,
-			'direction': scan_form.direction_radio.data, 
-			'steps':  scan_form.steps.data, 
-			'acquisition_rate': scan_form.acquisition_rate.data,
-			'secondary_axis': scan_form.axis_secondary_radio.data,
-			'acquisition_offset_rate': scan_form.acquisition_offset_rate.data,
-			'secondary_axis_step_size': scan_form.secondary_axis_step_size.data
-		}
-
-		response = requests.post_data(endpoint.movement, data)
-
-		if(response):
-			flash(helper.SCAN_OK.format(scan_name, response.json()['filename']))
+		if scan_form.axis_secondary_radio.data in scan_form.axis_radio.data:
+			flash(helper.ERROR['SAME_AXIS'], helper.FLASH_ERROR)
 		else:
-			flash(helper.ERROR['SCAN_EXCEPTION'], helper.FLASH_ERROR)
+			data = {
+				'name': scan_name,
+				'primary_axis': scan_form.axis_radio.data,
+				'direction': scan_form.direction_radio.data, 
+				'steps':  scan_form.steps.data, 
+				'acquisition_rate': scan_form.acquisition_rate.data,
+				'secondary_axis': scan_form.axis_secondary_radio.data,
+				'acquisition_offset_rate': scan_form.acquisition_offset_rate.data,
+				'secondary_axis_step_size': scan_form.secondary_axis_step_size.data
+			}
+
+			response = requests.post_data(endpoint.movement, data)
+
+			if(response):
+				flash(helper.SCAN_OK.format(scan_name, response.json()['filename']))
+			else:
+				flash(helper.ERROR['SCAN_EXCEPTION'], helper.FLASH_ERROR)
 
 	elif config_form.set_config.data and config_form.validate_on_submit():
 		data = wrap_configs(config_form)

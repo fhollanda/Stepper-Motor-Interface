@@ -2,5 +2,5 @@
 {% block title %}{{titles.HELP}}{{subtitle}}{% endblock %}
 {% block jumbotron %}
 {{super()}}
-	<p>{{ index_helper }}</p>
+	<p>{{ index_helper | safe }}</p>
 {% endblock %}

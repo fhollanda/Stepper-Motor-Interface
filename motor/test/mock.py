@@ -29,7 +29,7 @@ class CheckCopyright(Resource):
 		super(CheckCopyright, self).__init__()
 
 	def get(self):
-		return {'message': "OFFLINE"}, 200
+		return {'response': "OFFLINE"}, 200
 
 api.add_resource(MoveMotor, '/motor/api/move/<int:id>')
 api.add_resource(CheckCopyright, '/motor/api/copyright')
