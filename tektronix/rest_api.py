@@ -1,3 +1,4 @@
+#!tektronix/env/bin/python
 import tds2024Cusb
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse, abort

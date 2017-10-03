@@ -1,3 +1,4 @@
+#!web_app/env/bin/python
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from blueprints.caliper import caliper_blueprint
