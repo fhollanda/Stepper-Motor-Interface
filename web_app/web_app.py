@@ -6,6 +6,7 @@ from blueprints.copyright import copyright_blueprint
 from blueprints.movement import movement_blueprint
 from blueprints.captures import captures_blueprint
 from blueprints.abort import abort_blueprint
+from blueprints.manual_move import manual_move_blueprint
 import util.helper as helper
 import time, logging
 
@@ -19,6 +20,7 @@ app.register_blueprint(copyright_blueprint)
 app.register_blueprint(captures_blueprint)
 app.register_blueprint(movement_blueprint)
 app.register_blueprint(abort_blueprint)
+app.register_blueprint(manual_move_blueprint)
 
 @app.errorhandler(Exception)
 def all_exception_handler(error):

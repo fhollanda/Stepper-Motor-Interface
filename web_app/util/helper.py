@@ -3,11 +3,12 @@
 TITLE = {
 	'CALIPER':	u"Calibrar motor",
 	'CAPTURES': u"Capturas salvas",
-	'COPYRIGHT':	u"Informações de Copyright",
+	'COPYRIGHT':	u"Informações de Copyright do Arrick Robotics",
 	'MOVE':		u"Realizar varredura",
 	'MOVE1D': u"Varredura com uma dimensão",
 	'MOVE2D': u"Varredura com duas dimensões",
 	'MOVE3D': u"Varredura com três dimensões",
+	'MANUAL_MOVE': u"Controle manual",
 	'HELP': u"Ajuda - "
 }
 
@@ -27,6 +28,7 @@ MENU = {
 		'MOVE_1D': u"VARREDURA 1D",
 		'MOVE_2D': u"VARREDURA 2D",
 		'MOVE_3D': u"VARREDURA 3D",
+	'MANUAL_MOVE': u"CONTROLE MANUAL",
 	'HELP':	u"AJUDA"
 }
 
@@ -74,7 +76,9 @@ FIELDS = {
 	'REMOVE_CONFIRMATION': u'Tem certeza que deseja remover essa captura?',
 	'SHUTDOWN_CONFIRMATION': u'Tem certeza que deseja desligar o adaptador?',
 	'YES': 'Sim',
-	'CLOSE': u'Cancelar'
+	'CLOSE': u'Cancelar',
+
+	'MANUAL_MOVE_INFO': u'Clique nos direcionais e AGUARDE o equipamento finalizar a operação'
 }
 
 ERROR = {

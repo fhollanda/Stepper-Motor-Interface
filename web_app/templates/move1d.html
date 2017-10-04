@@ -7,6 +7,9 @@
 				{{ config_form.hidden_tag() }}
 
 				<legend>{{fields.CONFIG_SCOPE_LEGEND}}</legend>
+				<small id="config_info" class="form-text text-muted bottom-padding">
+					{{fields.CONFIG_INFO}}
+				</small>
 
 				{% if config_form.errors %}
 					<span style="color: red;">{{errors.REQUIRED_FIELD}}</span>
@@ -18,7 +21,7 @@
 				{% endfor %}
 
 				<div class="form-group">
-					<label for="channel">{{fields.CHANNEL}}:</label>
+					<br><label for="channel">{{fields.CHANNEL}}:</label>
 					<div> 
 						{{ config_form.channel(size=2, class_="form-control") }}
 					</div>
@@ -57,9 +60,6 @@
 					<div> 
 						{{ config_form.t_scale(size=2, class_="form-control") }}
 					</div>
-					<small id="config_info" class="form-text text-muted">
-						{{fields.CONFIG_INFO}}
-					</small>
 				</div>
 
 				<div class="form-group"> 
