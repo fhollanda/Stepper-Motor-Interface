@@ -48,7 +48,7 @@ def shutdown_server():
 @app.route('/shutdown', methods=['GET'])
 def shutdown():
 	shutdown_server()
-	return 'Adapter will shut down now...'
+	return 'Web-App will shut down now...'
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5002, threaded=True),

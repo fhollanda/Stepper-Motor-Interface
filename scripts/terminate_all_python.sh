@@ -1,1 +1,1 @@
-sudo pkill -9 python
+sudo pkill -15 python
