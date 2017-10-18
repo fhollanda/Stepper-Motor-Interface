@@ -5,7 +5,7 @@ from flask_cors import CORS
 from resources.abort import Abort
 from resources.captures import Capture, CapturesList
 from resources.copyright import Copyright
-from resources.movement import SingleAxisMove, DoubleAxisMove
+from resources.movement import SingleAxisMove, SingleAxisMoveAndCapture, DoubleAxisMoveAndCapture
 from resources.scope import SetScopeConfig
 import settings
 
@@ -31,7 +31,8 @@ api.add_resource(Copyright, '/adapter/api/copyright')
 
 #MOVEMENT
 api.add_resource(SingleAxisMove, '/adapter/api/move/<axis>')
-api.add_resource(DoubleAxisMove, '/adapter/api/move')
+api.add_resource(SingleAxisMoveAndCapture, '/adapter/api/scan/<axis>')
+api.add_resource(DoubleAxisMoveAndCapture, '/adapter/api/scan')
 
 #SCOPE
 api.add_resource(SetScopeConfig, '/adapter/api/scope/config')

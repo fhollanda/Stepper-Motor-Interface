@@ -9,7 +9,8 @@ ERROR = {
 	'GENERIC_HTTP_ERROR': u"Ocorreu um erro: {}",
 	'UNAVAILABLE_SERVICE': u"Algum dos serviços necessários se encontra indisponível, verifique os logs para descobrir a causa (err: x503)",
 	'NOT_FOUND': u"O recurso ou serviço procurado não foi encontrado (err: x404)",
-	'UNPROCESSABLE_ENTITY': u"Não foi possível processar essa requisição. Consulte o manual e refaça a operação (err: x422)"
+	'UNPROCESSABLE_ENTITY': u"Não foi possível processar essa requisição. Consulte o manual e refaça a operação (err: x422)",
+	'UNFINISHED': u"Ocorreu algum problema durante o procedimento, se o resultado obtido não foi o desejado, tente novamente"
 }
 
 REQUIRED_FIELD = u"O campo {} deve ser preenchido"

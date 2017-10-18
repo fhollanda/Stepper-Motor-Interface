@@ -7,7 +7,16 @@
 	{{super()}}
 	<link href="{{ url_for('static', filename='sticky-footer.css') }}" rel="stylesheet">
 	{% endblock %}
-	{% block scripts %}{{super()}}{% endblock %}
+	{% block scripts %}
+	{{super()}}
+		<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+		<script type="text/javascript">
+			function shutdown() {
+				$.post("{{url_for('shutdown')}}");
+				return false;
+			}
+		</script>
+	{% endblock %}
 </head>
 <body>
 	{% block navbar -%}

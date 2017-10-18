@@ -33,7 +33,7 @@ def move_1d():
 			'acquisition_rate': scan_form.acquisition_rate.data
 		}
 
-		response = requests.post_data(endpoint.movement + "/{}".format(scan_form.axis_radio.data), data)
+		response = requests.post_data(endpoint.scan + "/{}".format(scan_form.axis_radio.data), data)
 
 		if(response):
 			flash(helper.SCAN_OK.format(scan_name, response.json()['filename']))
@@ -76,7 +76,7 @@ def move_2d():
 				'secondary_axis_step_size': scan_form.secondary_axis_step_size.data
 			}
 
-			response = requests.post_data(endpoint.movement, data)
+			response = requests.post_data(endpoint.scan, data)
 
 			if(response):
 				flash(helper.SCAN_OK.format(scan_name, response.json()['filename']))

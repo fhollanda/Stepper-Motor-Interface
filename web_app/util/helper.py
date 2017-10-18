@@ -87,7 +87,8 @@ ERROR = {
 	'SAME_AXIS': u"Você precisa selecionar um eixo diferente para o \"Eixo Secundário\"",
 	'SET_CONFIG_EXCEPTION': u"Ocorreu um erro na hora de enviar os parâmetros para o osciloscópio",
 	'DELETE_CAPTURE_EXCEPTION': u"Ocorreu um erro ao deletar o arquivo <{}>",
-	'REQUIRED_FIELD': u"Por favor, preencha o(s) campo(s) indicado(s):"
+	'REQUIRED_FIELD': u"Por favor, preencha o(s) campo(s) indicado(s):",
+	'UNFINISHED': u"Ocorreu algum problema durante o procedimento, se o resultado obtido não foi o desejado, tente novamente"
 }
 
 FLASH = 		'flash'
@@ -96,4 +97,5 @@ RANDOM_ERROR = 	u"Apenas testando a box de erro"
 SET_CONFIG_OK = u"Configurações enviadas com sucesso para o osciloscópio"
 SCAN_OK = u"A captura \"{0}\" relativa ao arquivo <{1}> já está disponível no menu, em \"Capturas Salvas\""
 ABORT_OK = u"Foi enviado o comando para abortar a operação e o status retornado foi <strong>{0}</strong>, aperte o botão de retornar no navegador para recomeçar o procedimento"
+MOVE_OK = u"Foi enviado o comando para mover e o status retornado foi {0}"
 DELETE_CAPTURE_OK = u"Arquivo com identificador único <{}> apagado"

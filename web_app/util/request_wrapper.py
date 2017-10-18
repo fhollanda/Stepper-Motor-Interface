@@ -57,9 +57,16 @@ def post_data(endpoint, payload = None):
 			response.raise_for_status()
 	except requests.exceptions.HTTPError as e:
 		logging.error(e)
-		if(response.json()['message']):
+		if has_json_message():
 			cause = response.json()['message']
 			logging.exception("last error cause: " + cause)
 			flash(unicode(cause), helper.FLASH_ERROR)
 		else:
 			raise
+
+def has_json_message():
+	try:
+		response.json()['message']
+		return True
+	except:
+		return False

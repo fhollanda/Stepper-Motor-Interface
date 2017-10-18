@@ -4,6 +4,22 @@
 {{super()}}
 	<link href="{{ url_for('static', filename='d-pad.css') }}" rel="stylesheet">
 {% endblock %}
+{% block scripts %}
+{{super()}}
+	<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+	<script type="text/javascript">
+		function move(axis, direction) {
+			var data = JSON.stringify({ 'axis': axis, 'direction': direction });
+
+			$.ajax({
+				type: 'POST',
+				url: "{{url_for('manual_move.move_to_direction')}}",
+				data: data,
+				contentType: 'application/json'
+			});
+		}
+	</script>
+{% endblock %}
 {% block jumbotron %}
 {{super()}}
 <div class="manual-info">
@@ -12,18 +28,18 @@
 <div class="box">
 	<div class="controller-left">
 		<div class="d-pad-1">
-			<div class="d-key up" onClick='alert("Hello World!")'></div>
-			<div class="d-key down" onClick='alert("Hello World! 2")'></div>
+			<div class="d-key up" onClick="javascript:move('x', 'f')"></div>
+			<div class="d-key down" onClick="javascript:move('x', 'r')"></div>
 		</div>
 		<div class="d-pad-2">
-			<div class="d-key left" onClick='alert("Hello World! 3")'></div>
-			<div class="d-key right" onClick='alert("Hello World! 4")'></div>
+			<div class="d-key left" onClick="javascript:move('y', 'f')"></div>
+			<div class="d-key right" onClick="javascript:move('y', 'r')"></div>
 		</div>
 	</div>
 	<div class="controller-right">
 		<div class="d-pad-1">
-			<div class="d-key up" onClick='alert("Hello World! 5")'></div>
-			<div class="d-key down" onClick='alert("Hello World! 6")'></div>
+			<div class="d-key up" onClick="javascript:move('z', 'r')"></div>
+			<div class="d-key down" onClick="javascript:move('z', 'f')"></div>
 		</div>
 	</div>
 </div>

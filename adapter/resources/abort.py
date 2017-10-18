@@ -6,6 +6,6 @@ class Abort(Resource):
 	def post(self):
 		try:
 			settings.end_run()
-			return "OK", 200
+			return {'message': 'OK'}, 200
 		except Exception as e:
-			return e, 200
+			return e, 500
